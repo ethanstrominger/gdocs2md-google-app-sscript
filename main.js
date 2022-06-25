@@ -1,18 +1,30 @@
 function ConvertGoogleDocToCleanHtml() {
 
-  var subFolder = getFolder("test-html-from-googledocs",true);
+  processFolder("test-html-from-googledocs");
+
+
+}
+
+function processFolder(name) {
+  var subFolder = getFolder(name,true);
+  console.log('Processing folder', subFolder.getName());
+
+
   var files = subFolder.getFiles();
   while (files.hasNext()){
     var file = files.next()
     var doc = DocumentApp.openById(file.getId());
     var images = [];
-    var file = files.next();
     var html = getHtml(doc); 
     // emailHtml(doc, html, images);
     createDocumentForHtml(doc, html, images);
   }
-
-
+  var folders = subFolder.getFolders();
+  while (folders.hasNext()) {
+    var folder= folders.next()
+    console.log(folder.getName());
+    processFolder(folder.getName());
+  }
 }
 
 function getHtml(doc) {
@@ -71,6 +83,7 @@ function findFileByName(name){
 }
 
 function createDocumentForHtml(doc, html, images) {
+  console.log(doc.getName());
   var name = doc.getName()+".html";
   var newDoc = DocumentApp.create(name);
   newDoc.getBody().setText(html);
@@ -137,7 +150,7 @@ function processItem(item, listCounters, images) {
   }
   else if (item.getType() == DocumentApp.ElementType.INLINE_IMAGE)
   {
-    processImage(item, images, output);
+    procesage(item, images, output);
   }
   else if (item.getType()===DocumentApp.ElementType.LIST_ITEM) {
     var listItem = item;
