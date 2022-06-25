@@ -1,29 +1,35 @@
 function ConvertGoogleDocToCleanHtml() {
-
-  processFolder("test-html-from-googledocs");
-
-
+  var subFolder = getFolder('test-html-from-googledocs');
+  var outputFolder = getFolder('html-from-googledocs');
+  processFolder(subFolder, outputFolder);
 }
 
-function processFolder(name) {
-  var subFolder = getFolder(name,true);
-  console.log('Processing folder', subFolder.getName());
-
-
-  var files = subFolder.getFiles();
+function processFolder(filesFolder, outputFolder) {
+  console.log('Processing folder', filesFolder.getName());
+  var files = filesFolder.getFiles();
   while (files.hasNext()){
     var file = files.next()
     var doc = DocumentApp.openById(file.getId());
     var images = [];
     var html = getHtml(doc); 
     // emailHtml(doc, html, images);
-    createDocumentForHtml(doc, html, images);
+    createDocumentForHtml(outputFolder, doc, html, images);
   }
-  var folders = subFolder.getFolders();
+  var folders = filesFolder.getFolders();
   while (folders.hasNext()) {
     var folder= folders.next()
-    console.log(folder.getName());
-    processFolder(folder.getName());
+    var folderName = folder.getName();
+    var matchingFolders = outputFolder.getFoldersByName(folderName);
+    // @ts-ignore
+    if (matchingFolders.hasNext()) {
+      var outputFolder2 = matchingFolders.next();
+    } else {
+      outputFolder2 = outputFolder.createFolder(folderName); 
+    }
+    if (!outputFolder) {
+      outputFolder2 = outputFolder.createFolder(folderName); 
+    }
+    processFolder(folder, outputFolder2);
   }
 }
 
@@ -82,15 +88,14 @@ function findFileByName(name){
   
 }
 
-function createDocumentForHtml(doc, html, images) {
+function createDocumentForHtml(outputFolder, doc, html, images) {
   console.log(doc.getName());
   var name = doc.getName()+".html";
   var newDoc = DocumentApp.create(name);
   newDoc.getBody().setText(html);
   for(var j=0; j < images.length; j++)
     newDoc.getBody().appendImage(images[j].blob);
-  var subFolder = getFolder("html-from-googledocs",true);
-  var newDoc = subFolder.createFile(name, html, MimeType.PLAIN_TEXT);
+  var newDoc = outputFolder.createFile(name, html, MimeType.PLAIN_TEXT);
 }
 
 function getFolder(name,create, root){
