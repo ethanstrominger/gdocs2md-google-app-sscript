@@ -1,11 +1,18 @@
 function ConvertGoogleDocToCleanHtml() {
-  var file = findFileByName("simple-2");
-  var doc = DocumentApp.openById(file.getId());
-  var images = [];
 
-  var html = getHtml(doc); 
-  emailHtml(doc, html, images);
-  createDocumentForHtml(doc, html, images);
+  var subFolder = getFolder("test-html-from-googledocs",true);
+  var files = subFolder.getFiles();
+  while (files.hasNext()){
+    var file = files.next()
+    var doc = DocumentApp.openById(file.getId());
+    var images = [];
+    var file = files.next();
+    var html = getHtml(doc); 
+    // emailHtml(doc, html, images);
+    createDocumentForHtml(doc, html, images);
+  }
+
+
 }
 
 function getHtml(doc) {
