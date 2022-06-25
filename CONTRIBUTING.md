@@ -1,5 +1,5 @@
 Install clasp globally:
-`yarn add @google/clasp -g` or `npm install @google/clasp -g`
+`yarn add @google/clasp@2.3.0 -g` or `npm install @google/clasp@2.3.0cla -g`
 
 `clasp login`
 

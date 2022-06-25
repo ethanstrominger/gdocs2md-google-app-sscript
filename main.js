@@ -1,6 +1,14 @@
 function ConvertGoogleDocToCleanHtml() {
   var file = findFileByName("simple-2");
   var doc = DocumentApp.openById(file.getId());
+  var images = [];
+
+  var html = getHtml(doc); 
+  emailHtml(doc, html, images);
+  createDocumentForHtml(doc, html, images);
+}
+
+function getHtml(doc) {
   var body = doc.getBody();
   var numChildren = body.getNumChildren();
   var output = [];
@@ -14,8 +22,8 @@ function ConvertGoogleDocToCleanHtml() {
   }
 
   var html = output.join('\r');
-  emailHtml(doc, html, images);
-  //createDocumentForHtml(doc, html, images);
+  return html;
+
 }
 
 function emailHtml(doc, html, images) {
@@ -61,7 +69,30 @@ function createDocumentForHtml(doc, html, images) {
   newDoc.getBody().setText(html);
   for(var j=0; j < images.length; j++)
     newDoc.getBody().appendImage(images[j].blob);
-  newDoc.saveAndClose();
+  var subFolder = getFolder("html-from-googledocs",true);
+  var newDoc = subFolder.createFile(name, html, MimeType.PLAIN_TEXT);
+}
+
+function getFolder(name,create, root){
+  
+  if (root == null){
+    root = DriveApp;
+  }
+  
+  var folderIter = root.getFoldersByName(name);
+  
+  var folder = null;
+  
+  if(folderIter.hasNext()){
+    folder = folderIter.next();
+  }
+  
+  if(folder == null && create){
+    folder = root.createFolder(name);
+  }
+  
+  return folder;
+
 }
 
 function dumpAttributes(atts) {
