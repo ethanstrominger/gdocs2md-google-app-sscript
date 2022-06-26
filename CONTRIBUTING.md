@@ -1,13 +1,12 @@
-Install clasp globally:
-`yarn add @google/clasp@2.3.0 -g` or `npm install @google/clasp@ -g`
+One time set up:
 
-`clasp login`
+- create your own Google Apps Script project or ask Ethan to share his
+- install clasp
+  `yarn add @google/clasp@2.3.0 -g` or `npm install @google/clasp@ -g`
+- fork this repository
+- push script from this repository to your Google app
+  `clasp login`
+  `clasp push`
 
-One time steps for https://github.com/oazabir/GoogleDoc2Html
-
-- Navigate to link and copy file mentioned
-- Open up a google doc
-- Extensions => Apps Script
-- Paste content
-- Save content
-- Run
+Get most recent changes to the script:
+`clasp pull`
