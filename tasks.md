@@ -40,7 +40,7 @@ Next steps for Ethan:
 
 - [x] Review work done by Alyssa documented in this issue
 - [x] Investigate existing open source (see findings below)
-- [ ] Check with Alyssa if any additional resources created and anything checked into GitHub
+- [x] Check with Alyssa if any additional resources created and anything checked into GitHub
 - [ ] Find out where to store collateral:
   - [ ] Is separate repository an option?
   - [ ] If existing repository, where does the collateral get stored
