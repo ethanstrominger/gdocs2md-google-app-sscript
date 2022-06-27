@@ -1,7 +1,50 @@
-function ConvertGoogleDocToCleanHtml() {
+function doGet(e) {
+  var action = e?.parameter?.action || 'getfiles'
+  var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs'
+  // ConvertGoogleDocToCleanHtml()
+  return mainProcess ( action = action, inputFolderName = inputFolderName );
+}
+
+function mainProcess ( action, inputFolderName ) {
+  var subFolder = getOrCreateFolder(inputFolderName);
+  var fileList = [];
+  getFoldersAndFiles(fileList, subFolder, '');
+  console.log(fileList);
+  if ( action === 'getfiles' ) {
+    return HtmlService.createHtmlOutput(JSON.stringify(fileList));
+  };
+}
+
+function debugLog (text) {
+  appendTextArgs("googlescript3.log", arguments);
+}
+
+function ConvertGoogleDocToCleanHtml(folderName, fileName) {
+  var subFolder = getOrCreateFolder2('test-html-from-googledocs');
+  processFolder(subFolder, outputFolder);
+}
+
+
+function ConvertGoogleDocsToCleanHtml() {
   var subFolder = getOrCreateFolder('test-html-from-googledocs');
   var outputFolder = getOrCreateFolder('html-from-googledocs/elephant');
   processFolder(subFolder, outputFolder);
+}
+
+function getFoldersAndFiles(fileList, filesFolder, parentFolderName) {
+  console.log('Processing folder', filesFolder.getName());
+  var files = filesFolder.getFiles();
+  var expandedFolderName = parentFolderName + filesFolder.getName() + '/';
+  while (files.hasNext()){
+    var file = files.next();
+    fileList.push([file.getName(),expandedFolderName ])
+  }
+  var folders = filesFolder.getFolders();
+  while (folders.hasNext()) {
+    var folder= folders.next()
+    var folderName = folder.getName();
+    getFoldersAndFiles(fileList, folder, expandedFolderName);
+  }
 }
 
 function processFolder(filesFolder, outputFolder) {

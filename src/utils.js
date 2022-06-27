@@ -24,6 +24,27 @@ function emailHtml(doc, html, images) {
    });
 }
 
+function appendTextArgs ( fileName, textArgs ) {
+    var fileList = DriveApp.getFilesByName(fileName);
+    var fileText = "";
+
+    for (var j=0; j<textArgs.length; j++) {
+      fileText = fileText +" "+textArgs[j];
+    }
+
+    if (fileList.hasNext()) {
+      // found matching file - append text
+      var file = fileList.next();
+      var combinedContent = file.getBlob().getDataAsString() + '\n' + fileText;
+      file.setContent(combinedContent);
+    }
+    else {
+      // file not found - create new
+      console.log('creating file text', fileText);
+      DriveApp.createFile(fileName, fileText);
+    }
+}
+
 function createDocumentForHtml(outputFolder, doc, html, images) {
   console.log(doc.getName());
   var name = doc.getName()+".html";
