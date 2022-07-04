@@ -22,7 +22,9 @@ const TOKEN_PATH = "token.json";
 const content = fs.readFileSync("credentials.json");
 // Authorize a client with credentials, then call the Google Docs API.
 const auth = authorize(JSON.parse(content), main);
-main(auth);
+if (auth) {
+  main(auth);
+}
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -37,9 +39,14 @@ function authorize(credentials, callback) {
     client_secret,
     redirect_uris[0]
   );
-  const x = fs.readFileSync(TOKEN_PATH);
-  oAuth2Client.setCredentials(JSON.parse(x));
-  return oAuth2Client;
+  try {
+    const token = fs.readFileSync(TOKEN_PATH);
+    oAuth2Client.setCredentials(JSON.parse(x));
+    return oAuth2Client;
+  } catch {
+    getNewToken(oAuth2Client);
+    return undefined;
+  }
 }
 
 /**
@@ -68,7 +75,7 @@ function getNewToken(oAuth2Client, callback) {
         if (err) console.error(err);
         console.log("Token stored to", TOKEN_PATH);
       });
-      callback(oAuth2Client);
+      // callback(oAuth2Client);
     });
   });
 }
@@ -92,7 +99,6 @@ async function main(auth) {
   const folder = await drive.files.get({
     fileId: "1LJlF5id-a69ADbg56QK48a8Ufu0b8HRE",
   });
-  console.log("f", folder.data.title);
   // for (file in files) {
   //   console.log(file);
   // }
