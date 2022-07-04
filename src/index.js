@@ -44,9 +44,14 @@ function authorize(credentials, callback) {
     oAuth2Client.setCredentials(JSON.parse(x));
     return oAuth2Client;
   } catch {
-    getNewToken(oAuth2Client);
+    console.log("a");
+    const f = getNewTokenPromise(oAuth2Client);
     return undefined;
   }
+}
+
+function getNewTokenPromise(oAuth2Client) {
+  return new Promise((resolve) => getNewToken(oAuth2Client, resolve));
 }
 
 /**
@@ -75,6 +80,7 @@ function getNewToken(oAuth2Client, callback) {
         if (err) console.error(err);
         console.log("Token stored to", TOKEN_PATH);
       });
+      callback();
       // callback(oAuth2Client);
     });
   });
