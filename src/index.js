@@ -38,13 +38,9 @@ function authorize(credentials, callback) {
     client_secret,
     redirect_uris[0]
   );
-
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getNewToken(oAuth2Client, callback);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    callback(oAuth2Client);
-  });
+  const x = fs.readFileSync(TOKEN_PATH);
+  oAuth2Client.setCredentials(JSON.parse(x));
+  callback(oAuth2Client);
 }
 
 /**
