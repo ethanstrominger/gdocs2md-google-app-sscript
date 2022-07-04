@@ -39,15 +39,15 @@ function authorize(credentials, callback) {
     client_secret,
     redirect_uris[0]
   );
+  let token;
   try {
-    const token = fs.readFileSync(TOKEN_PATH);
-    oAuth2Client.setCredentials(JSON.parse(x));
-    return oAuth2Client;
-  } catch {
-    console.log("a");
+    token = fs.readFileSync(TOKEN_PATH);
+  } catch (err) {
     const f = getNewTokenPromise(oAuth2Client);
     return undefined;
   }
+  oAuth2Client.setCredentials(JSON.parse(token));
+  return oAuth2Client;
 }
 
 function getNewTokenPromise(oAuth2Client) {
