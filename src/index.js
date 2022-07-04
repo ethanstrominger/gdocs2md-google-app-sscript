@@ -1,6 +1,11 @@
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
+const inputFolderKey = "inputfolder";
+const outputFolderKey = "outputfolder";
+const fileNameKey = "filenamekey";
+const args = new Map();
+setDefaultArgValues(args);
 
 process.argv.forEach((val, index) => {
   console.log(`${index}: ${val}`);
@@ -102,4 +107,10 @@ async function main(auth) {
   //     console.log(`The title of the document is: ${res.data.title}`);
   //   }
   // );
+}
+
+function setDefaultArgValues(args) {
+  args.set(inputFolderKey, "test-html-from-googledocs");
+  args.set(outputFolderKey, "./output-html-from-google-docs");
+  args.set(fileNameKey, "");
 }
