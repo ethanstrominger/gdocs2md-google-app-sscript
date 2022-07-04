@@ -1,4 +1,4 @@
 export default {
   input: "src/app.js",
-  output: { file: "dest/app.js", format: "iife" },
+  output: { file: "dest/app.cjs", format: "iife" },
 };
