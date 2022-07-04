@@ -21,7 +21,8 @@ const TOKEN_PATH = "token.json";
 // Load client secrets from a local file.
 const content = fs.readFileSync("credentials.json");
 // Authorize a client with credentials, then call the Google Docs API.
-authorize(JSON.parse(content), main);
+const auth = authorize(JSON.parse(content), main);
+main(auth);
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -38,7 +39,7 @@ function authorize(credentials, callback) {
   );
   const x = fs.readFileSync(TOKEN_PATH);
   oAuth2Client.setCredentials(JSON.parse(x));
-  callback(oAuth2Client);
+  return oAuth2Client;
 }
 
 /**
