@@ -100,6 +100,10 @@ async function main() {
   const folderObj = await drive.files.list({
     q: "name='test-html-from-googledocs'",
   });
+  await processFolder(folderObj, drive);
+}
+
+async function processFolder(folderObj, drive) {
   let childrenObj;
   // folderObj.data.files should iterate just once or there is an error
   let i = 0;
@@ -115,16 +119,6 @@ async function main() {
   childrenObj.data.files.forEach((file) => {
     console.log(file.name);
   });
-
-  // for (file in files) {
-  //   console.log(file);
-  // }
-  //   ,
-  //   (err, res) => {
-  //     if (err) return console.log("The API returned an error: " + err);
-  //     console.log(`The title of the document is: ${res.data.title}`);
-  //   }
-  // );
 }
 
 function setDefaultArgValues(args) {
