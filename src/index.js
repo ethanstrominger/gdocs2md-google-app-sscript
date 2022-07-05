@@ -97,27 +97,29 @@ async function main() {
     return;
   }
   const drive = google.drive({ version: "v3", auth });
-  const folderObj = await drive.files.list({
+  const folderIterator = await drive.files.list({
     q: "name='test-html-from-googledocs'",
   });
+  let folder;
+  folderIterator.data.files.forEach((firstFolder) => {
+    folder = firstFolder;
+  });
+  const folderObj = await drive.files.get({ fileId: folder.id });
   await processFolder(folderObj, drive);
 }
 
 async function processFolder(folderObj, drive) {
-  let childrenObj;
-  // folderObj.data.files should iterate just once or there is an error
-  let i = 0;
-  for (folder of folderObj.data.files) {
-    i++;
-    if (i > 2) {
-      // todo: exception
+  const childrenObj = await drive.files.list({
+    q: `"${folderObj.data.id}" in parents`,
+  });
+
+  childrenObj.data.files.forEach(async (file) => {
+    console.log("listing", file, file.name);
+    // console.log(drive.files.get({ fileId: file.id }));
+    if (file.mimeType.includes("folder")) {
+      const q = await drive.files.get({ fileId: file.id });
+      processFolder(q, drive);
     }
-    childrenObj = await drive.files.list({
-      q: `"${folder.id}" in parents`,
-    });
-  }
-  childrenObj.data.files.forEach((file) => {
-    console.log(file.name);
   });
 }
 
