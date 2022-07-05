@@ -7,8 +7,11 @@ const fileNameKey = "filenamekey";
 const args = new Map();
 setDefaultArgValues(args);
 
-process.argv.forEach((val, index) => {
-  console.log(`${index}: ${val}`);
+process.argv.forEach((val) => {
+  if (val.includes("=")) {
+    const keyValue = val.split("=");
+    args.set(keyValue[0], keyValue[1]);
+  }
 });
 
 // If modifying these scopes, delete token.json.
@@ -20,7 +23,8 @@ const TOKEN_PATH = "token.json";
 
 // Load client secrets from a local file.
 // Authorize a client with credentials, then call the Google Docs API.
-main();
+const inputFolder = args.get(inputFolderKey);
+main({ inputFolder });
 // if (auth) {
 //   main(auth);
 // }
@@ -90,7 +94,7 @@ function getNewToken(oAuth2Client, callback) {
  * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth 2.0 client.
  */
-async function main() {
+async function main({ inputFolder }) {
   const content = fs.readFileSync("credentials.json");
   const auth = await authorize(JSON.parse(content));
   if (!auth) {
@@ -98,7 +102,7 @@ async function main() {
   }
   const drive = google.drive({ version: "v3", auth });
   const folderIterator = await drive.files.list({
-    q: "name='test-html-from-googledocs'",
+    q: `name='${inputFolder}'`,
   });
   let folder;
   folderIterator.data.files.forEach((firstFolder) => {
@@ -114,7 +118,7 @@ async function processFolder({ folderObj, drive, fullDirName }) {
   });
 
   childrenObj.data.files.forEach(async (file) => {
-    console.log("file/folder", file.name);
+    console.log("file/folder", fullDirName, file.name);
     if (file.mimeType.includes("folder")) {
       const folderObj = await drive.files.get({ fileId: file.id });
       processFolder({
