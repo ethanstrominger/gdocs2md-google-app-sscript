@@ -97,25 +97,19 @@ async function main() {
     return;
   }
   const drive = google.drive({ version: "v3", auth });
-  const folder2 = await drive.files.list({
+  const folderObj = await drive.files.list({
     q: "name='test-html-from-googledocs'",
   });
-  console.log("folder", folder2.data.files);
-  const files = folder2.data.files;
-  files.forEach(async (element) => {
+  const folder = folderObj.data.files.forEach(async (element) => {
     const testx = await drive.files.get({ fileId: element.id });
-    const children = await drive.files.list({
+    const childrenObj = await drive.files.list({
       q: `"${element.id}" in parents`,
     });
-    console.log("children", children.data);
-    // children.forEach((file) => {
-    //   console.log(file.name);
-    // });
+    childrenObj.data.files.forEach((file) => {
+      console.log(file.name);
+    });
   });
 
-  const folder = await drive.files.get({
-    fileId: "1LJlF5id-a69ADbg56QK48a8Ufu0b8HRE",
-  });
   // for (file in files) {
   //   console.log(file);
   // }
