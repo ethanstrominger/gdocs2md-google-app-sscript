@@ -19,12 +19,11 @@ const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
 const TOKEN_PATH = "token.json";
 
 // Load client secrets from a local file.
-const content = fs.readFileSync("credentials.json");
 // Authorize a client with credentials, then call the Google Docs API.
-const auth = authorize(JSON.parse(content), main);
-if (auth) {
-  main(auth);
-}
+main();
+// if (auth) {
+//   main(auth);
+// }
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -32,7 +31,7 @@ if (auth) {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+function authorize(credentials) {
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -91,7 +90,9 @@ function getNewToken(oAuth2Client, callback) {
  * https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth 2.0 client.
  */
-async function main(auth) {
+async function main() {
+  const content = fs.readFileSync("credentials.json");
+  const auth = authorize(JSON.parse(content));
   const drive = google.drive({ version: "v3", auth });
   const folder2 = await drive.files.list({
     q: "name='test4'",
