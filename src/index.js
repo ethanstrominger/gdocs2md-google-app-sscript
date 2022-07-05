@@ -98,12 +98,19 @@ async function main() {
   }
   const drive = google.drive({ version: "v3", auth });
   const folder2 = await drive.files.list({
-    q: "name='test4'",
+    q: "name='test-html-from-googledocs'",
   });
   console.log("folder", folder2.data.files);
   const files = folder2.data.files;
-  files.forEach((element) => {
-    console.log("e", element.id, element.mimeType, element.name);
+  files.forEach(async (element) => {
+    const testx = await drive.files.get({ fileId: element.id });
+    const children = await drive.files.list({
+      q: `"${element.id}" in parents`,
+    });
+    console.log("children", children.data);
+    // children.forEach((file) => {
+    //   console.log(file.name);
+    // });
   });
 
   const folder = await drive.files.get({
