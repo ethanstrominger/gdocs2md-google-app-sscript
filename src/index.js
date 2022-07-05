@@ -42,7 +42,7 @@ async function authorize(credentials) {
   try {
     token = fs.readFileSync(TOKEN_PATH);
   } catch (err) {
-    const f = getNewTokenPromise(oAuth2Client);
+    const f = await getNewTokenPromise(oAuth2Client);
     return undefined;
   }
   oAuth2Client.setCredentials(JSON.parse(token));
