@@ -31,7 +31,7 @@ main();
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials) {
+async function authorize(credentials) {
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -92,7 +92,7 @@ function getNewToken(oAuth2Client, callback) {
  */
 async function main() {
   const content = fs.readFileSync("credentials.json");
-  const auth = authorize(JSON.parse(content));
+  const auth = await authorize(JSON.parse(content));
   const drive = google.drive({ version: "v3", auth });
   const folder2 = await drive.files.list({
     q: "name='test4'",
