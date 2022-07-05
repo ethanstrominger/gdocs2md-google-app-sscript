@@ -100,14 +100,20 @@ async function main() {
   const folderObj = await drive.files.list({
     q: "name='test-html-from-googledocs'",
   });
-  const folder = folderObj.data.files.forEach(async (element) => {
-    const testx = await drive.files.get({ fileId: element.id });
-    const childrenObj = await drive.files.list({
-      q: `"${element.id}" in parents`,
+  let childrenObj;
+  // folderObj.data.files should iterate just once or there is an error
+  let i = 0;
+  for (folder of folderObj.data.files) {
+    i++;
+    if (i > 2) {
+      // todo: exception
+    }
+    childrenObj = await drive.files.list({
+      q: `"${folder.id}" in parents`,
     });
-    childrenObj.data.files.forEach((file) => {
-      console.log(file.name);
-    });
+  }
+  childrenObj.data.files.forEach((file) => {
+    console.log(file.name);
   });
 
   // for (file in files) {
