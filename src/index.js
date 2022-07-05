@@ -43,7 +43,7 @@ async function authorize(credentials) {
     token = fs.readFileSync(TOKEN_PATH);
   } catch (err) {
     const f = await getNewTokenPromise(oAuth2Client);
-    return undefined;
+    return oAuth2Client;
   }
   oAuth2Client.setCredentials(JSON.parse(token));
   return oAuth2Client;
@@ -93,6 +93,9 @@ function getNewToken(oAuth2Client, callback) {
 async function main() {
   const content = fs.readFileSync("credentials.json");
   const auth = await authorize(JSON.parse(content));
+  if (!auth) {
+    return;
+  }
   const drive = google.drive({ version: "v3", auth });
   const folder2 = await drive.files.list({
     q: "name='test4'",
@@ -100,7 +103,7 @@ async function main() {
   console.log("folder", folder2.data.files);
   const files = folder2.data.files;
   files.forEach((element) => {
-    console.log("e", element);
+    console.log("e", element.id, element.mimeType, element.name);
   });
 
   const folder = await drive.files.get({
