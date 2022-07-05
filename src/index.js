@@ -105,20 +105,19 @@ async function main() {
     folder = firstFolder;
   });
   const folderObj = await drive.files.get({ fileId: folder.id });
-  await processFolder(folderObj, drive);
+  await processFolder(folderObj, drive, folderObj.data.name);
 }
 
-async function processFolder(folderObj, drive) {
+async function processFolder(folderObj, drive, fullDirName) {
+  console.log("folder", fullDirName);
   const childrenObj = await drive.files.list({
     q: `"${folderObj.data.id}" in parents`,
   });
 
   childrenObj.data.files.forEach(async (file) => {
-    console.log("listing", file, file.name);
-    // console.log(drive.files.get({ fileId: file.id }));
     if (file.mimeType.includes("folder")) {
       const q = await drive.files.get({ fileId: file.id });
-      processFolder(q, drive);
+      processFolder(q, drive, fullDirName + "/" + file.name);
     }
   });
 }
