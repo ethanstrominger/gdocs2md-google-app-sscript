@@ -3,9 +3,11 @@ import * as readline from "readline";
 import { GaxiosResponse } from "gaxios";
 import { drive_v3, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
+import { docs } from "googleapis/build/src/apis/docs";
 const inputFolderKey = "inputfolder";
 const outputFolderKey = "outputfolder";
 const fileNameKey = "filenamekey";
+const docsApi = docs("v1");
 const args = new Map();
 setDefaultArgValues(args);
 
@@ -123,6 +125,7 @@ async function main({ inputFolder }: { inputFolder: string }) {
     folderObj,
     drive,
     fullDirName: folderObj.data.name || "",
+    auth,
   });
 }
 
@@ -130,10 +133,12 @@ async function processFolder({
   folderObj,
   drive,
   fullDirName,
+  auth,
 }: {
   folderObj: GaxiosResponse<drive_v3.Schema$File>;
   drive: drive_v3.Drive;
   fullDirName: string;
+  auth: any;
 }) {
   const childrenObj = await drive.files.list({
     q: `"${folderObj.data.id}" in parents`,
@@ -147,6 +152,18 @@ async function processFolder({
         folderObj,
         drive,
         fullDirName: fullDirName + "/" + file.name,
+        auth,
+      });
+    } else if (file.mimeType?.includes("doc")) {
+      const docs = google.docs({
+        version: "v1",
+        auth,
+      });
+      const doc = await docs.documents.get({ documentId: file.id });
+      console.log("doc", file.name, doc.data.body?.content);
+      const elements = doc.data.body?.content;
+      elements?.forEach((element: any) => {
+        console.log("element", element, "paragraph", element.paragraph);
       });
     }
   });
