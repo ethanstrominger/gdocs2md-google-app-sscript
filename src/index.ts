@@ -180,10 +180,33 @@ function addParagraph(
   const childElements = paragraph.paragraph?.elements;
   if (childElements) {
     childElements.forEach((childElement) => {
-      htmlLines.push(childElement.textRun?.content || "");
+      let text = childElement.textRun?.content || "";
+      const style = childElement.textRun?.textStyle;
+      const boldIt = style?.bold;
+      const htmlStyle = "bold";
+      text = checkForStyle({ doStyle: style?.bold, text, htmlStyle: "bold" });
+      text = checkForStyle({ doStyle: style?.italic, text, htmlStyle: "i" });
+      console.log("debug", text, style);
+      htmlLines.push(text || "");
     });
+
     console.log("element.paragraph.elements", paragraph.paragraph?.elements);
   }
+}
+
+function checkForStyle({
+  doStyle,
+  text,
+  htmlStyle,
+}: {
+  doStyle: boolean | undefined;
+  text: string;
+  htmlStyle: string;
+}) {
+  if (doStyle) {
+    text = `<${htmlStyle}>${text}</${htmlStyle}>`;
+  }
+  return text;
 }
 
 function setDefaultArgValues(args: Map<String, String>) {
