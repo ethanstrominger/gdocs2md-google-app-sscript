@@ -1,8 +1,7 @@
-function getHtml(doc) {
-  var body = doc.getBody();
+export function getHtml(body) {
   var numChildren = body.getNumChildren();
   var output = [];
-  var images = [];
+  var images: any[] = [];
   var listCounters = {};
 
   // Walk through all the child elements of the body.
@@ -15,7 +14,7 @@ function getHtml(doc) {
   return html;
 }
 
-function processItem(item, listCounters, images) {
+export function processItem(item, listCounters, images) {
   var output = [];
   var prefix = "",
     suffix = "";
@@ -135,8 +134,6 @@ function processText(item, output) {
       var startPos = indices[i];
       var endPos = i + 1 < indices.length ? indices[i + 1] : text.length;
       var partText = text.substring(startPos, endPos);
-
-      Logger.log(partText);
 
       if (partAtts.ITALIC) {
         output.push("<i>");

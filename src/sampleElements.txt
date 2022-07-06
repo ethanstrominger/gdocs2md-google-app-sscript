@@ -1,0 +1,381 @@
+file/folder full Heading 1
+doc Heading 1 [
+  { endIndex: 1, sectionBreak: { sectionStyle: [Object] } },
+  {
+    startIndex: 1,
+    endIndex: 11,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 11,
+    endIndex: 21,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 21,
+    endIndex: 31,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 31,
+    endIndex: 51,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 51,
+    endIndex: 77,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 77,
+    endIndex: 101,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 101,
+    endIndex: 125,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 125,
+    endIndex: 129,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 129,
+    endIndex: 139,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 139,
+    endIndex: 140,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 140,
+    endIndex: 165,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 165,
+    endIndex: 166,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  },
+  {
+    startIndex: 166,
+    endIndex: 292,
+    table: { rows: 4, columns: 3, tableRows: [Array], tableStyle: [Object] }
+  },
+  {
+    startIndex: 292,
+    endIndex: 293,
+    paragraph: { elements: [Array], paragraphStyle: [Object] }
+  }
+]
+Looping
+element {
+  endIndex: 1,
+  sectionBreak: {
+    sectionStyle: {
+      columnSeparatorStyle: 'NONE',
+      contentDirection: 'LEFT_TO_RIGHT',
+      sectionType: 'CONTINUOUS'
+    }
+  }
+} paragraph undefined
+Looping
+element {
+  startIndex: 1,
+  endIndex: 11,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: {
+      headingId: 'h.vwz1t2nbegz0',
+      namedStyleType: 'HEADING_1',
+      direction: 'LEFT_TO_RIGHT'
+    }
+  }
+} paragraph {
+  elements: [ { startIndex: 1, endIndex: 11, textRun: [Object] } ],
+  paragraphStyle: {
+    headingId: 'h.vwz1t2nbegz0',
+    namedStyleType: 'HEADING_1',
+    direction: 'LEFT_TO_RIGHT'
+  }
+}
+detail [
+  {
+    startIndex: 1,
+    endIndex: 11,
+    textRun: { content: 'Heading 1\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 11,
+  endIndex: 21,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: {
+      headingId: 'h.iwmcyejps5vc',
+      namedStyleType: 'HEADING_2',
+      direction: 'LEFT_TO_RIGHT'
+    }
+  }
+} paragraph {
+  elements: [ { startIndex: 11, endIndex: 21, textRun: [Object] } ],
+  paragraphStyle: {
+    headingId: 'h.iwmcyejps5vc',
+    namedStyleType: 'HEADING_2',
+    direction: 'LEFT_TO_RIGHT'
+  }
+}
+detail [
+  {
+    startIndex: 11,
+    endIndex: 21,
+    textRun: { content: 'Heading 2\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 21,
+  endIndex: 31,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: {
+      headingId: 'h.724cjv1byscp',
+      namedStyleType: 'HEADING_3',
+      direction: 'LEFT_TO_RIGHT'
+    }
+  }
+} paragraph {
+  elements: [ { startIndex: 21, endIndex: 31, textRun: [Object] } ],
+  paragraphStyle: {
+    headingId: 'h.724cjv1byscp',
+    namedStyleType: 'HEADING_3',
+    direction: 'LEFT_TO_RIGHT'
+  }
+}
+detail [
+  {
+    startIndex: 21,
+    endIndex: 31,
+    textRun: { content: 'Heading 3\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 31,
+  endIndex: 51,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 31, endIndex: 51, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 31,
+    endIndex: 51,
+    textRun: { content: 'A normal paragraph.\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 51,
+  endIndex: 77,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 51, endIndex: 77, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 51,
+    endIndex: 77,
+    textRun: { content: 'Another normal paragraph.\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 77,
+  endIndex: 101,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 77, endIndex: 101, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 77,
+    endIndex: 101,
+    textRun: { content: 'Put some space between.\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 101,
+  endIndex: 125,
+  paragraph: {
+    elements: [ [Object], [Object], [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [
+    { startIndex: 101, endIndex: 106, textRun: [Object] },
+    { startIndex: 106, endIndex: 113, textRun: [Object] },
+    { startIndex: 113, endIndex: 125, textRun: [Object] }
+  ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 101,
+    endIndex: 106,
+    textRun: { content: 'Bold ', textStyle: [Object] }
+  },
+  {
+    startIndex: 106,
+    endIndex: 113,
+    textRun: { content: 'Italic ', textStyle: [Object] }
+  },
+  {
+    startIndex: 113,
+    endIndex: 125,
+    textRun: { content: 'Bold Italic\n', textStyle: [Object] }
+  }
+]
+Looping
+element {
+  startIndex: 125,
+  endIndex: 129,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 125, endIndex: 129, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 125,
+    endIndex: 129,
+    textRun: { content: 'Red\n', textStyle: [Object] }
+  }
+]
+Looping
+element {
+  startIndex: 129,
+  endIndex: 139,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 129, endIndex: 139, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 129,
+    endIndex: 139,
+    textRun: { content: 'After red\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 139,
+  endIndex: 140,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 139, endIndex: 140, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 139,
+    endIndex: 140,
+    textRun: { content: '\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 140,
+  endIndex: 165,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 140, endIndex: 165, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 140,
+    endIndex: 165,
+    textRun: { content: 'Space between paragraphs\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 165,
+  endIndex: 166,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 165, endIndex: 166, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 165,
+    endIndex: 166,
+    textRun: { content: '\n', textStyle: {} }
+  }
+]
+Looping
+element {
+  startIndex: 166,
+  endIndex: 292,
+  table: {
+    rows: 4,
+    columns: 3,
+    tableRows: [ [Object], [Object], [Object], [Object] ],
+    tableStyle: { tableColumnProperties: [Array] }
+  }
+} paragraph undefined
+Looping
+element {
+  startIndex: 292,
+  endIndex: 293,
+  paragraph: {
+    elements: [ [Object] ],
+    paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+  }
+} paragraph {
+  elements: [ { startIndex: 292, endIndex: 293, textRun: [Object] } ],
+  paragraphStyle: { namedStyleType: 'NORMAL_TEXT', direction: 'LEFT_TO_RIGHT' }
+}
+detail [
+  {
+    startIndex: 292,
+    endIndex: 293,
+    textRun: { content: '\n', textStyle: {} }
+  }
+]

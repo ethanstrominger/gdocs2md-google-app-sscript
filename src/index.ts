@@ -1,9 +1,10 @@
 import * as fs from "fs";
 import * as readline from "readline";
 import { GaxiosResponse } from "gaxios";
-import { drive_v3, google } from "googleapis";
+import { docs_v1, drive_v3, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 import { docs } from "googleapis/build/src/apis/docs";
+import { getHtml } from "./convert";
 const inputFolderKey = "inputfolder";
 const outputFolderKey = "outputfolder";
 const fileNameKey = "filenamekey";
@@ -162,15 +163,31 @@ async function processFolder({
       const doc = await docs.documents.get({ documentId: file.id });
       console.log("doc", file.name, doc.data.body?.content);
       const elements = doc.data.body?.content;
-      elements?.forEach((element: any) => {
-        console.log("element", element, "paragraph", element.paragraph);
+      const htmlLines: string[] = [];
+      elements?.forEach((paragraph) => {
+        addParagraph(paragraph, htmlLines);
       });
+      console.log("html", htmlLines);
+      // const html = getHtml(doc.data.body);
     }
   });
 }
 
+function addParagraph(
+  paragraph: docs_v1.Schema$StructuralElement,
+  htmlLines: string[]
+) {
+  const childElements = paragraph.paragraph?.elements;
+  if (childElements) {
+    childElements.forEach((childElement) => {
+      htmlLines.push(childElement.textRun?.content || "");
+    });
+    console.log("element.paragraph.elements", paragraph.paragraph?.elements);
+  }
+}
+
 function setDefaultArgValues(args: Map<String, String>) {
-  args.set(inputFolderKey, "test-html-from-googledocs");
+  args.set(inputFolderKey, "full");
   args.set(outputFolderKey, "./output-html-from-google-docs");
   args.set(fileNameKey, "");
 }
