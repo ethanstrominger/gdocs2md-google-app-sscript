@@ -1,5 +1,5 @@
-import fs from "fs";
-import readline from "readline";
+import * as fs from "fs";
+import * as readline from "readline";
 import { GaxiosResponse } from "gaxios";
 import { drive_v3, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
