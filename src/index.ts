@@ -1,13 +1,12 @@
 import fs from "fs";
 import readline from "readline";
-import { google } from "googleapis";
+import { drive_v3, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 const inputFolderKey = "inputfolder";
 const outputFolderKey = "outputfolder";
 const fileNameKey = "filenamekey";
 const args = new Map();
 setDefaultArgValues(args);
-let x;
 
 process.argv.forEach((val) => {
   if (val.includes("=")) {
@@ -84,11 +83,15 @@ function getNewToken(oAuth2Client: OAuth2Client, callback: Function) {
   });
   rl.question("Enter the code from that page here: ", (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err: Error, token: string) => {
+    oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error("Error retrieving access token", err);
+      if (!token) return;
       oAuth2Client.setCredentials(token);
       // Store the token to disk for later program executions
-      fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
+      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+        if (err) console.error(err);
+        console.log("Token stored to", TOKEN_PATH);
+      });
       callback();
     });
   });
@@ -109,11 +112,12 @@ async function main({ inputFolder }: { inputFolder: string }) {
   const folderIterator = await drive.files.list({
     q: `name='${inputFolder}'`,
   });
-  let folder;
+  let folder: drive_v3.Schema$File | undefined;
   folderIterator.data.files?.forEach((firstFolder) => {
     folder = firstFolder;
   });
-  const folderObj = await drive.files.get({ fileId.id });
+  if (!folder) return;
+  const folderObj = await drive.files.get({ fileId: folder?.id });
   await processFolder({ folderObj, drive, fullDirName: folderObj.data.name });
 }
 
