@@ -1,5 +1,6 @@
 import fs from "fs";
 import readline from "readline";
+import { GaxiosResponse } from "gaxios";
 import { drive_v3, google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
 const inputFolderKey = "inputfolder";
@@ -118,7 +119,11 @@ async function main({ inputFolder }: { inputFolder: string }) {
   });
   if (!folder) return;
   const folderObj = await drive.files.get({ fileId: folder?.id });
-  await processFolder({ folderObj, drive, fullDirName: folderObj.data.name });
+  await processFolder({
+    folderObj,
+    drive,
+    fullDirName: folderObj.data.name || "",
+  });
 }
 
 async function processFolder({
@@ -126,17 +131,17 @@ async function processFolder({
   drive,
   fullDirName,
 }: {
-  folderObj: any;
-  drive: any;
-  fullDirName: any;
+  folderObj: GaxiosResponse<drive_v3.Schema$File>;
+  drive: drive_v3.Drive;
+  fullDirName: string;
 }) {
   const childrenObj = await drive.files.list({
     q: `"${folderObj.data.id}" in parents`,
   });
 
-  childrenObj.data.files.forEach(async (file: any) => {
+  childrenObj.data.files?.forEach(async (file: drive_v3.Schema$File) => {
     console.log("file/folder", fullDirName, file.name);
-    if (file.mimeType.includes("folder")) {
+    if (file.mimeType?.includes("folder")) {
       const folderObj = await drive.files.get({ fileId: file.id });
       processFolder({
         folderObj,
