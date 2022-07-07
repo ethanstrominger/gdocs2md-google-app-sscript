@@ -1,198 +1,157 @@
-export function getHtml(body) {
-  var numChildren = body.getNumChildren();
-  var output = [];
-  var images: any[] = [];
-  var listCounters = {};
+import { docs_v1, drive_v3 } from "googleapis";
 
-  // Walk through all the child elements of the body.
-  for (var i = 0; i < numChildren; i++) {
-    var child = body.getChild(i);
-    output.push(processItem(child, listCounters, images));
+let startedList = false;
+let listId = "";
+let listCount = 0;
+let htmlLines: string[] = [];
+
+export async function getHtml(docs: docs_v1.Docs, file: drive_v3.Schema$File) {
+  console.log("hello");
+  const doc = await docs.documents.get({ documentId: file.id });
+  console.log("doc", file.name, doc.data.body?.content);
+  const elements = doc.data.body?.content;
+  htmlLines = [];
+  console.log("data", doc.data);
+  const lists = doc.data.lists;
+  console.log("data.lists", lists);
+  if (lists) {
+    Object.keys(lists).forEach((key) => {
+      console.log("key:", key);
+      const nesting = lists[key].listProperties?.nestingLevels;
+      if (nesting) {
+        nesting.forEach((nest) => console.log("nesting", nest));
+      }
+    });
   }
-
-  var html = output.join("\n");
-  return html;
-}
-
-export function processItem(item, listCounters, images) {
-  var output = [];
-  var prefix = "",
-    suffix = "";
-
-  if (item.getType() == DocumentApp.ElementType.PARAGRAPH) {
-    switch (item.getHeading()) {
-      // Add a # for each heading level. No break, so we accumulate the right number.
-      case DocumentApp.ParagraphHeading.HEADING6:
-        (prefix = "<h6>"), (suffix = "</h6>");
-        break;
-      case DocumentApp.ParagraphHeading.HEADING5:
-        (prefix = "<h5>"), (suffix = "</h5>");
-        break;
-      case DocumentApp.ParagraphHeading.HEADING4:
-        (prefix = "<h4>"), (suffix = "</h4>");
-        break;
-      case DocumentApp.ParagraphHeading.HEADING3:
-        (prefix = "<h3>"), (suffix = "</h3>");
-        break;
-      case DocumentApp.ParagraphHeading.HEADING2:
-        (prefix = "<h2>"), (suffix = "</h2>");
-        break;
-      case DocumentApp.ParagraphHeading.HEADING1:
-        (prefix = "<h1>"), (suffix = "</h1>");
-        break;
-      default:
-        (prefix = "<p>"), (suffix = "</p>");
-    }
-
-    if (item.getNumChildren() == 0) return "";
-  } else if (item.getType() == DocumentApp.ElementType.INLINE_IMAGE) {
-    procesage(item, images, output);
-  } else if (item.getType() === DocumentApp.ElementType.LIST_ITEM) {
-    var listItem = item;
-    var gt = listItem.getGlyphType();
-    var key = listItem.getListId() + "." + listItem.getNestingLevel();
-    var counter = listCounters[key] || 0;
-
-    // First list item
-    if (counter == 0) {
-      // Bullet list (<ul>):
-      if (
-        gt === DocumentApp.GlyphType.BULLET ||
-        gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
-        gt === DocumentApp.GlyphType.SQUARE_BULLET
-      ) {
-        (prefix = '<ul class="small"><li>'), (suffix = "</li>");
-
-        suffix += "</ul>";
-      } else {
-        // Ordered list (<ol>):
-        (prefix = "<ol><li>"), (suffix = "</li>");
-      }
-    } else {
-      prefix = "<li>";
-      suffix = "</li>";
-    }
-
-    if (
-      item.isAtDocumentEnd() ||
-      item.getNextSibling().getType() != DocumentApp.ElementType.LIST_ITEM
-    ) {
-      if (
-        gt === DocumentApp.GlyphType.BULLET ||
-        gt === DocumentApp.GlyphType.HOLLOW_BULLET ||
-        gt === DocumentApp.GlyphType.SQUARE_BULLET
-      ) {
-        suffix += "</ul>";
-      } else {
-        // Ordered list (<ol>):
-        suffix += "</ol>";
-      }
-    }
-
-    counter++;
-    listCounters[key] = counter;
-  }
-
-  output.push(prefix);
-
-  if (item.getType() == DocumentApp.ElementType.TEXT) {
-    processText(item, output);
-  } else {
-    if (item.getNumChildren) {
-      var numChildren = item.getNumChildren();
-
-      // Walk through all the child elements of the doc.
-      for (var i = 0; i < numChildren; i++) {
-        var child = item.getChild(i);
-        output.push(processItem(child, listCounters, images));
-      }
-    }
-  }
-
-  output.push(suffix);
-  return output.join("");
-}
-
-function processText(item, output) {
-  var text = item.getText();
-  var indices = item.getTextAttributeIndices();
-
-  if (indices.length <= 1) {
-    // Assuming that a whole para fully italic is a quote
-    if (item.isBold()) {
-      output.push("<b>" + text + "</b>");
-    } else if (item.isItalic()) {
-      output.push("<blockquote>" + text + "</blockquote>");
-    } else if (text.trim().indexOf("http://") == 0) {
-      output.push('<a href="' + text + '" rel="nofollow">' + text + "</a>");
-    } else {
-      output.push(text);
-    }
-  } else {
-    for (var i = 0; i < indices.length; i++) {
-      var partAtts = item.getAttributes(indices[i]);
-      var startPos = indices[i];
-      var endPos = i + 1 < indices.length ? indices[i + 1] : text.length;
-      var partText = text.substring(startPos, endPos);
-
-      if (partAtts.ITALIC) {
-        output.push("<i>");
-      }
-      if (partAtts.BOLD) {
-        output.push("<b>");
-      }
-      if (partAtts.UNDERLINE) {
-        output.push("<u>");
-      }
-
-      // If someone has written [xxx] and made this whole text some special font, like superscript
-      // then treat it as a reference and make it superscript.
-      // Unfortunately in Google Docs, there's no way to detect superscript
-      if (partText.indexOf("[") == 0 && partText[partText.length - 1] == "]") {
-        output.push("<sup>" + partText + "</sup>");
-      } else if (partText.trim().indexOf("http://") == 0) {
-        output.push(
-          '<a href="' + partText + '" rel="nofollow">' + partText + "</a>"
-        );
-      } else {
-        output.push(partText);
-      }
-
-      if (partAtts.ITALIC) {
-        output.push("</i>");
-      }
-      if (partAtts.BOLD) {
-        output.push("</b>");
-      }
-      if (partAtts.UNDERLINE) {
-        output.push("</u>");
-      }
-    }
-  }
-}
-
-function processImage(item, images, output) {
-  images = images || [];
-  var blob = item.getBlob();
-  var contentType = blob.getContentType();
-  var extension = "";
-  if (/\/png$/.test(contentType)) {
-    extension = ".png";
-  } else if (/\/gif$/.test(contentType)) {
-    extension = ".gif";
-  } else if (/\/jpe?g$/.test(contentType)) {
-    extension = ".jpg";
-  } else {
-    throw "Unsupported image type: " + contentType;
-  }
-  var imagePrefix = "Image_";
-  var imageCounter = images.length;
-  var name = imagePrefix + imageCounter + extension;
-  imageCounter++;
-  output.push('<img src="cid:' + name + '" />');
-  images.push({
-    blob: blob,
-    type: contentType,
-    name: name,
+  console.log("body", doc.data.body);
+  console.log("body.content", doc.data.body?.content);
+  elements?.forEach((paragraph) => {
+    console.log("adding paragraph");
+    addParagraph(paragraph);
   });
+  console.log("html", htmlLines);
+}
+
+const paragraphStylelMapping: Map<String, String> = new Map([
+  ["HEADING_1", "h1"],
+  ["HEADING_2", "h2"],
+  ["HEADING_3", "h3"],
+  ["HEADING_4", "h4"],
+  ["HEADING_5", "h5"],
+  ["HEADING_6", "h6"],
+]);
+
+function addParagraph(element: docs_v1.Schema$StructuralElement) {
+  console.log("xxxxx");
+  const childElements = element.paragraph?.elements;
+  let text = "";
+  if (childElements) {
+    childElements.forEach((childElement) => {
+      text += getTextAndStyle(childElement);
+    });
+
+    console.log("element", element);
+    console.log(
+      "element.paragraph",
+      element.paragraph,
+      "element.pargraph?.bullet",
+      element.paragraph?.bullet
+    );
+
+    console.log(
+      "element.paragraph.paragraphStyle",
+      element.paragraph?.paragraphStyle
+    );
+    console.log("element.paragraph.elements", element.paragraph?.elements);
+  }
+  text = addParagraphStyle(element, text);
+  text = addBulletStyle(element, text);
+  htmlLines.push(text || "");
+}
+
+function getTextAndStyle(childElement: docs_v1.Schema$ParagraphElement) {
+  let text = childElement.textRun?.content || "";
+  const style = childElement.textRun?.textStyle;
+  const boldIt = style?.bold;
+  const htmlStyle = "bold";
+  text = checkForStyle({ doStyle: style?.bold, text, htmlStyle: "bold" });
+  text = checkForStyle({ doStyle: style?.italic, text, htmlStyle: "i" });
+  console.log("debug", text, style);
+  return text;
+}
+
+function checkForStyle({
+  doStyle,
+  text,
+  htmlStyle,
+}: {
+  doStyle: boolean | undefined;
+  text: string;
+  htmlStyle: string;
+}) {
+  if (doStyle) {
+    text = `<${htmlStyle}>${text}</${htmlStyle}>`;
+  }
+  return text;
+}
+
+function addParagraphStyle(
+  element: docs_v1.Schema$StructuralElement,
+  text: string
+) {
+  const docParagrahStyle = element.paragraph?.paragraphStyle?.namedStyleType;
+  let htmlTag;
+  if (docParagrahStyle) {
+    htmlTag = paragraphStylelMapping.get(docParagrahStyle);
+  }
+  if (!htmlTag) {
+    if (element.paragraph?.bullet) {
+      htmlTag = "";
+    } else {
+      htmlTag = "p";
+    }
+  }
+
+  return addTag(htmlTag, text);
+}
+
+function addBulletStyle(
+  element: docs_v1.Schema$StructuralElement,
+  text: string
+) {
+  const bullet = element.paragraph?.bullet;
+  let startText = "";
+  if (bullet) {
+    console.log(
+      "debug bullet",
+      text.replace("\n", ""),
+      startedList,
+      bullet?.listId
+    );
+    if (bullet.listId !== listId) {
+      listId = bullet.listId || "";
+      listCount = 1;
+    } else {
+      listCount++;
+      if (!startedList) {
+        console.log("debug bullet b");
+        startText = ` start="${listCount}"`;
+      }
+    }
+    if (!startedList) {
+      startedList = true;
+      htmlLines.push(`<ol${startText}>`);
+    }
+
+    return addTag("li", text);
+  } else {
+    if (startedList) {
+      startedList = false;
+      htmlLines.push("</ol>");
+    }
+    return text;
+  }
+}
+function addTag(htmlTag: string | String, text: string) {
+  return htmlTag ? `<${htmlTag}>${text}</${htmlTag}>` : text;
 }
