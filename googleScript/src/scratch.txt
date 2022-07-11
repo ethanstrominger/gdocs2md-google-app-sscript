@@ -1,0 +1,118 @@
+// function getOrCreateFolder(name,root){
+
+//   if (root == null){
+//     root = DriveApp;
+//   }
+
+//   var folderIter = root.getFoldersByName(name);
+
+//   var folder = null;
+
+//   if(folderIter.hasNext()){
+//     folder = folderIter.next();
+//   }
+
+//   if(folder == null){
+//     folder = root.createFolder(name);
+//   }
+
+//   return folder;
+
+// }
+
+// function getOrCreateFolder(name,root){
+
+//   if (root == null){
+//     root = DriveApp;
+//   }
+
+//   var folderIter = root.getFoldersByName(name);
+
+//   var folder = null;
+
+//   if(folderIter.hasNext()){
+//     folder = folderIter.next();
+//   }
+
+//   if(folder == null){
+//     folder = root.createFolder(name);
+//   }
+
+//   return folder;
+
+// }
+// function dumpAttributes(atts) {
+//   // Log the paragraph attributes.
+//   for (var att in atts) {
+//     Logger.log(att + ":" + atts[att]);
+//   }
+// }
+
+
+// function processFolder(filesFolder, outputFolder) {
+//   console.log('Processing folder', filesFolder.getName());
+//   var files = filesFolder.getFiles();
+//   while (files.hasNext()){
+//     var file = files.next()
+//     var doc = DocumentApp.openById(file.getId());
+//     var images = [];
+//     var html = getHtml(doc);
+//     // emailHtml(doc, html, images);
+//     createDocumentForHtml(outputFolder, doc, html, images);
+//   }
+//   var folders = filesFolder.getFolders();
+//   while (folders.hasNext()) {
+//     var folder= folders.next()
+//     var folderName = folder.getName();
+//     var matchingFolders = outputFolder.getFoldersByName(folderName);
+//     // @ts-ignore
+//     if (matchingFolders.hasNext()) {
+//       var outputFolder2 = matchingFolders.next();
+//     } else {
+//       outputFolder2 = outputFolder.createFolder(folderName);
+//     }
+//     if (!outputFolder) {
+//       outputFolder2 = outputFolder.createFolder(folderName);
+//     }
+//     processFolder(folder, outputFolder2);
+//   }
+// }
+// function emailHtml(doc, html, images) {
+//   var attachments = [];
+//   for (var j=0; j<images.length; j++) {
+//     attachments.push( {
+//       "fileName": images[j].name,
+//       "mimeType": images[j].type,
+//       "content": images[j].blob.getBytes() } );
+//   }
+
+//   var inlineImages = {};
+//   for (var j=0; j<images.length; j++) {
+//     inlineImages[[images[j].name]] = images[j].blob;
+//   }
+
+//   var name = doc.getName()+".html";
+//   attachments.push({"fileName":name, "mimeType": "text/html", "content": html});
+//   MailApp.sendEmail({
+//      to: Session.getActiveUser().getEmail(),
+//      subject: name,
+//      htmlBody: html,
+//      inlineImages: inlineImages,
+//      attachments: attachments
+//    });
+// }
+// function createDocumentForHtml(outputFolder, doc, html, images) {
+//   console.log(doc.getName());
+//   var name = doc.getName() + ".html";
+//   var newDoc = DocumentApp.create(name);
+//   newDoc.getBody().setText(html);
+//   for (var j = 0; j < images.length; j++)
+//     newDoc.getBody().appendImage(images[j].blob);
+//   var newDoc = outputFolder.createFile(name, html, MimeType.PLAIN_TEXT);
+// }
+
+
+
+
+
+
