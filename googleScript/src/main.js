@@ -1,21 +1,25 @@
 function doGet(e) {
-  var action = e?.parameter?.action || 'gethtml'
-  var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs/folderb2/'
+  var action = e?.parameter?.action || "gethtml";
+  var inputFolderName =
+    e?.parameter?.inputfoldername || "test-html-from-googledocs/folderb2/";
   // var action = e?.parameter?.action || 'getfiles'
   // var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs'
-  var fileName = e?.parameter?.filename || 'test4'
+  var fileName = e?.parameter?.filename || "test4";
   // ConvertGoogleDocToCleanHtml()
-  return mainProcess ( { action, inputFolderName, fileName } );
+  return mainProcess({ action, inputFolderName, fileName });
 }
 
-function mainProcess ( options ) {
+function mainProcess(options) {
   var fileList = [];
-  if ( options.action === 'getfiles' ) {
+  if (options.action === "getfiles") {
     var root = DriveApp.getFoldersByName(options.inputFolderName).next();
-    populateFileList(fileList, root, '');
+    populateFileList(fileList, root, "");
     return HtmlService.createHtmlOutput(JSON.stringify(fileList));
   } else {
-    var html = ConvertGoogleDocToCleanHtml(options.inputFolderName, options.fileName);
+    var html = ConvertGoogleDocToCleanHtml(
+      options.inputFolderName,
+      options.fileName
+    );
     return HtmlService.createHtmlOutput(html);
   }
 }
@@ -23,29 +27,27 @@ function mainProcess ( options ) {
 function ConvertGoogleDocToCleanHtml(folderName, fileName) {
   var subFolder = getFolders(folderName);
   var file = subFolder.getFilesByName(fileName).next();
-  console.log('file', file.getName());
+  console.log("file", file.getName());
   var doc = DocumentApp.openById(file.getId());
-  var html = getHtml(doc);
+  const html = getHtml(doc);
   return html;
 }
 
-
 function populateFileList(fileList, filesFolder, parentFolderName) {
-  console.log('Processing folder', filesFolder.getName());
+  console.log("Processing folder", filesFolder.getName());
   var files = filesFolder.getFiles();
-  var expandedFolderName = parentFolderName + filesFolder.getName() + '/';
-  while (files.hasNext()){
+  var expandedFolderName = parentFolderName + filesFolder.getName() + "/";
+  while (files.hasNext()) {
     var file = files.next();
-    fileList.push({ fileName: file.getName(), folderName: expandedFolderName })
+    fileList.push({ fileName: file.getName(), folderName: expandedFolderName });
   }
   var folders = filesFolder.getFolders();
   while (folders.hasNext()) {
-    var folder= folders.next()
+    var folder = folders.next();
     var folderName = folder.getName();
     populateFileList(fileList, folder, expandedFolderName);
   }
 }
-
 
 // function processFolder(filesFolder, outputFolder) {
 //   console.log('Processing folder', filesFolder.getName());
@@ -54,7 +56,7 @@ function populateFileList(fileList, filesFolder, parentFolderName) {
 //     var file = files.next()
 //     var doc = DocumentApp.openById(file.getId());
 //     var images = [];
-//     var html = getHtml(doc); 
+//     var html = getHtml(doc);
 //     // emailHtml(doc, html, images);
 //     createDocumentForHtml(outputFolder, doc, html, images);
 //   }
@@ -67,10 +69,10 @@ function populateFileList(fileList, filesFolder, parentFolderName) {
 //     if (matchingFolders.hasNext()) {
 //       var outputFolder2 = matchingFolders.next();
 //     } else {
-//       outputFolder2 = outputFolder.createFolder(folderName); 
+//       outputFolder2 = outputFolder.createFolder(folderName);
 //     }
 //     if (!outputFolder) {
-//       outputFolder2 = outputFolder.createFolder(folderName); 
+//       outputFolder2 = outputFolder.createFolder(folderName);
 //     }
 //     processFolder(folder, outputFolder2);
 //   }

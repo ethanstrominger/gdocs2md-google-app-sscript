@@ -10,3 +10,4 @@ One time set up:
 
 Get most recent changes to the script:
 `clasp pull`
+c
