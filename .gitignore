@@ -4,4 +4,5 @@ dest
 yarn-error.log
 token.json
 out
-
+.*.json-old
+*.json-old
