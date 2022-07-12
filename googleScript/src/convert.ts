@@ -28,9 +28,8 @@ namespace convert {
       suffix = "";
 
     if (item.getType() == DocumentApp.ElementType.PARAGRAPH) {
-      ({ prefix, suffix } = processParagraph(item, prefix, suffix));
-
       if (item.getNumChildren() == 0) return "";
+      ({ prefix, suffix } = processParagraph(item, prefix, suffix));
     } else if (item.getType() == DocumentApp.ElementType.INLINE_IMAGE) {
       processItem(item, images, output);
       depth = depth - 1;
@@ -87,17 +86,7 @@ namespace convert {
       processText(item, output);
     } else {
       if (item.getNumChildren) {
-        var numChildren = item.getNumChildren();
-        console.log("loop 2");
-
-        // Walk through all the child elements of the doc.
-        for (var i = 0; i < numChildren; i++) {
-          console.log("depth, i", depth, i);
-          var child = item.getChild(i);
-          output.push(processItem(child, listCounters, images));
-          depth = depth - 1;
-          console.log("depth, i", depth, i);
-        }
+        processChildren(item, output, listCounters, images);
       } else {
         processText(item, output);
       }
@@ -105,6 +94,25 @@ namespace convert {
 
     output.push(suffix);
     return output.join("");
+  }
+
+  function processChildren(
+    item: any,
+    output: String[],
+    listCounters: any,
+    images: any
+  ) {
+    var numChildren = item.getNumChildren();
+    console.log("loop 2");
+
+    // Walk through all the child elements of the doc.
+    for (var i = 0; i < numChildren; i++) {
+      console.log("depth, i", depth, i);
+      var child = item.getChild(i);
+      output.push(processItem(child, listCounters, images));
+      depth = depth - 1;
+      console.log("depth, i", depth, i);
+    }
   }
 
   function processParagraph(item: any, prefix: string, suffix: string) {
