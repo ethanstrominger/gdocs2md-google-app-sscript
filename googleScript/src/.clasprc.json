@@ -1,1 +1,16 @@
-{"token":{"access_token":"ya29.a0AVA9y1uWsR90FT60IsUJk99Jnm4K871tm87igNvuzDO6kAYFFu47XjiWKktigDTsz3wOty_o26vHQj4H5rLNgW0-7olzHU5x9kdIjSm3J28NhrTK-YDOz4GXQycD57RU1Pf4U2wWmuQD_pNSEfq3J6LrU8iU","scope":"https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/logging.read https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/script.deployments https://www.googleapis.com/auth/service.management https://www.googleapis.com/auth/script.webapp.deploy openid","token_type":"Bearer","id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6IjFiZDY4NWY1ZThmYzYyZDc1ODcwNWMxZWIwZThhNzUyNGM0NzU5NzUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDcyOTQ0OTA1NDk5LXZtMnYyaTVkdm4wYTBkMm80Y2EzNmkxdmdlOGN2Ym4wLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA3Mjk0NDkwNTQ5OS12bTJ2Mmk1ZHZuMGEwZDJvNGNhMzZpMXZnZThjdmJuMC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExNjk2NTgyNzQyMjg3MzcwNTYxOSIsImVtYWlsIjoiZXRoYW5zdHJvbWluZ2VyMkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Inlwd3pBQWtYVEp4RHI5VldOSE1nd0EiLCJpYXQiOjE2NTc2Mjc3NjQsImV4cCI6MTY1NzYzMTM2NH0.i3xJUvcYsNnT_hkJSLxBExpqlf6i_cYY29Hr8bZKrqzsyz4rS-ZARZ8xUqTi_eW9Af-7GJjEuvRqYoYH_WDCEiI10jTmg2dgQni70R4sN61v3avODqHW_XCins7cStOZtM_Y7Z6h3hf7-EsQrj_9kTLlJHfjhTYKZqqUmoOYGwabYVRw1-WXwA2mE4rTq1LXjrABC1PhYo58KCO_pUdOGnK10UJX-lgsfli8yX7k2PwPH01v4Unt3k4YXgfHGmMim68Dl3OUtEp0uZyA0qhH-d9GCRrMFWKraW74Q_lr-opW7AMhHfD5l3xozi9XR-ZFydP4jL2G5-uBR0yDrRXm0A","expiry_date":1657631363603,"refresh_token":"1//0dM-wAyg_dWk3CgYIARAAGA0SNwF-L9IrY4lxpeTw8G0zt2GWvWiwI7oJdHpcNXD9lbbgr9F2aavJh1v6xGthRil-FfKwcqdU3gY"},"oauth2ClientSettings":{"clientId":"1072944905499-vm2v2i5dvn0a0d2o4ca36i1vge8cvbn0.apps.googleusercontent.com","clientSecret":"v6V3fKV_zWU7iw1DrpO1rknX","redirectUri":"http://localhost"},"isLocalCreds":false}
+{
+  "token": {
+    "access_token": "ya29.a0AVA9y1sViXv0y3p4vorj9fz6ZiyQrdDysZV086iusgRBsTp-Dy08qscX76N3IGoHVpauJPzs5Q4IKdJ197qxUF2ru-t65oW6w3qnM6WO1Arf0160FDmZO5dPW4s_HTGMew7n9ZOXhjLdcAu77zxNu8-79PQF",
+    "refresh_token": "1//0d7g57jRa8JqLCgYIARAAGA0SNwF-L9Ir1eIAnOVQ_8q44D7sroOFgYc8OfawW645Xad-ZE8rOdrI2IKoug6jtXDhRhw0iCGPWh8",
+    "scope": "https://www.googleapis.com/auth/script.webapp.deploy https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/documents",
+    "token_type": "Bearer",
+    "expiry_date": 1657637308242
+  },
+  "oauth2ClientSettings": {
+    "clientId": "322814428114-vql68695k84jvnrpvj8268qkcab0ksjd.apps.googleusercontent.com",
+    "clientSecret": "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",
+    "redirectUri": "http://localhost"
+  },
+  "isLocalCreds": true,
+  "project_id": "clasp-project-355010"
+}

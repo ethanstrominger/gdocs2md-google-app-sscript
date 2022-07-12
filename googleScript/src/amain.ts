@@ -4,10 +4,10 @@
 export function doGet(e) {
   var action = e?.parameter?.action || "gethtml";
   var inputFolderName =
-    e?.parameter?.inputfoldername || "test-html-from-googledocs/folderb2/";
+    e?.parameter?.inputfoldername || "test-html-from-googledocs/full/";
   // var action = e?.parameter?.action || 'getfiles'
   // var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs'
-  var fileName = e?.parameter?.filename || "test4";
+  var fileName = e?.parameter?.filename || "all";
   return mainProcess({ action, inputFolderName, fileName });
 }
 
