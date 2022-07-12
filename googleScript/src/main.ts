@@ -18,10 +18,12 @@ function mainProcess(options) {
     populateFileList(fileList, root, "");
     return HtmlService.createHtmlOutput(JSON.stringify(fileList));
   } else {
+    console.log("calling covertdoc");
     var html = ConvertGoogleDocToCleanHtml(
       options.inputFolderName,
       options.fileName
     );
+    console.log("returned from convertdoc", html);
     return HtmlService.createHtmlOutput(html);
   }
 }
@@ -31,7 +33,9 @@ function ConvertGoogleDocToCleanHtml(folderName, fileName) {
   var file = subFolder.getFilesByName(fileName).next();
   console.log("file", file.getName());
   var doc = DocumentApp.openById(file.getId());
+  console.log("calling getHtml");
   const html = convert.getHtml(doc);
+  console.log("returned from getHtml", html);
   return html;
 }
 
