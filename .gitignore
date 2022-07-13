@@ -6,3 +6,5 @@ token.json
 out
 .*.json-old
 *.json-old
+.clasprc.json
+credentials.json
