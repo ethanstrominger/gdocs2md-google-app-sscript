@@ -26,6 +26,7 @@
 - Folder with files needed for this issue: [Google Docs to Markdown Converter](https://drive.google.com/drive/folders/1A7fCpYTakb_3wCOv7fSM8oyN-wTkisA0)
 - Wins to Review Folder - Ask permission from one of the HfLA Website Team's technical leads or merge team members
 - ~[Figma Design Link for Guide Pages Redesign](https://www.figma.com/file/Jz8KoGTBIxdx9jRxBWrEsF/Guides-Team-Figma?node-id=127%3A4278)~
+- [Figjam flowchart](https://www.figma.com/file/mczWg3oQqaBZiAl2OSV7rE/Website-Publication-Workflow)
 - this is where Alyssa was working. All designs as of 2021-10-25 have been moved to [official HfLA website figma](https://www.figma.com/file/0RRPy1Ph7HafI3qOITg0Mr/Hack-for-LA-Website?node-id=695%3A0)
 
 ### Past Issues
@@ -36,8 +37,3 @@ Past Issues (All documentation that may be useful)
 - https://github.com/hackforla/website/issues/1630#issuecomment-968714568 - Documentation of Progress Made for Guide Pages Redesign (General)
 - Credits to [Tutorial on Google Apps Script - Markdown Converter](https://www.linkedin.com/learning/google-apps-script-for-javascript-developers/welcome?autoplay=true&u=35553996)
 - [DR: Use an existing add on converter called Docs to Markdown](https://github.com/hackforla/website/wiki/DR:-Use-an-existing-add-on-converter-called-Docs-to-Markdown)
-- Message @alyssabenipayo via Slack or Email for clarification if needed.
-
-### Publication workflow
-
-- [Figjam flowchart](https://www.figma.com/file/mczWg3oQqaBZiAl2OSV7rE/Website-Publication-Workflow)
