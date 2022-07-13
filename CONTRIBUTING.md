@@ -1,4 +1,6 @@
-One time set up:
+See [contribuiting.md in googleScript directory](googleScript/Contributing.md)
+
+<!-- One time set up:
 
 - create a GCP project with appropriate privileges
 - fork this repository
@@ -27,4 +29,4 @@ One time set up:
   - enter the project number in the dialog on the App Script screen
     ![image](https://user-images.githubusercontent.com/32078396/178491762-d5d48dab-191d-41e1-b7ff-3b3315f9d734.png)
 
-- `clasp run doGet`
+- `clasp run doGet` -->

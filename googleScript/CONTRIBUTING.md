@@ -16,6 +16,8 @@ clasp create --title <project-name> --type standalone
 clasp push
 ```
 
+**NEVER MODIFY CODE FROM BROWSER**
+
 **ALWAYS PUSH TO CLASP, NEVER PULL**
 
 - follow instructions for executing the app script from the browser
@@ -33,5 +35,7 @@ clasp push
 - make changes using your favorite editor
 - clasp push
 - execute from browser (see previous section)
+
+**NEVER MODIFY CODE FROM BROWSER**
 
 **ALWAYS PUSH TO CLASP, NEVER PULL**
