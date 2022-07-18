@@ -1,5 +1,7 @@
 {
+  "type": "module",
   "dependencies": {
+    "@types/node": "^18.0.6",
     "@types/google-apps-script": "^1.0.52",
     "fs": "^0.0.1-security",
     "google-auth-library": "^8.1.1",

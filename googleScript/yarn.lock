@@ -7,7 +7,7 @@
   resolved "https://registry.yarnpkg.com/@types/google-apps-script/-/google-apps-script-1.0.53.tgz#824aec8f002408bb39dba28c0abd4acb9974908f"
   integrity sha512-aFDrrqxhCcbM8h4hNID41HqhFWSwKsCCs9y99vbZdwNr5yeAW9ZcmQiNDp+P3BEL0nsR/rn5wt5Hv4kvyAU3Wg==
 
-"@types/node@^18.0.4":
+"@types/node@^18.0.6":
   version "18.0.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.6.tgz#0ba49ac517ad69abe7a1508bc9b3a5483df9d5d7"
   integrity sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==
