@@ -2,7 +2,7 @@
 // import { getHtml } from "./convert";
 // import { getFolders } from "./utils
 export function doGet(e) {
-  var action = e?.parameter?.action || "gethtml";
+  var action = e?.parameter?.action || "getfiles";
   var inputFolderName =
     e?.parameter?.inputfoldername || "test-html-from-googledocs/full/";
   // var action = e?.parameter?.action || 'getfiles'
@@ -14,8 +14,16 @@ export function doGet(e) {
 function mainProcess(options) {
   var fileList = [];
   if (options.action === "getfiles") {
-    var root = DriveApp.getFoldersByName(options.inputFolderName).next();
-    populateFileList(fileList, root, "");
+    let folderName = options.inputFolderName;
+    if (folderName.endsWith("/")) {
+      folderName = folderName.substr(0, folderName.length - 1);
+    }
+    const lastSlash = folderName.lastIndexOf("/");
+    const parentFolderName = folderName.substr(0, lastSlash + 1);
+    console.log("parent", parentFolderName);
+    const root = utils.getFolder(folderName);
+    populateFileList(fileList, root, parentFolderName);
+    console.log(fileList);
     return HtmlService.createHtmlOutput(JSON.stringify(fileList));
   } else {
     console.log("calling covertdoc");
@@ -29,7 +37,7 @@ function mainProcess(options) {
 }
 
 function ConvertGoogleDocToCleanHtml(folderName, fileName) {
-  var subFolder = utils.getFolders(folderName);
+  var subFolder = utils.getFolder(folderName);
   var file = subFolder.getFilesByName(fileName).next();
   console.log("file", file.getName());
   var doc = DocumentApp.openById(file.getId());

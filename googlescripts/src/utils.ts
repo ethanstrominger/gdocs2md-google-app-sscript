@@ -19,10 +19,10 @@ namespace utils {
     }
   }
 
-  export function getFolders(folderName) {
+  export function getFolder(folderName) {
     var dirs = folderName.split("/");
     DriveApp.getFolders().next();
-    console.log("got folders");
+    console.log("getting folders");
     var folder = DriveApp.getFoldersByName(dirs[0]).next();
     for (var x = 1; x < dirs.length; x++) {
       var dirName = dirs[x];
