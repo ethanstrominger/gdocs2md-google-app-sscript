@@ -41,13 +41,41 @@ your project id and directory. To find your project id, open your project in scr
 
 **ALWAYS PUSH TO CLASP, NEVER PULL**
 
-### Execute Code from Browser
+### Execute Code from App Script web UI
 
 - https://script.google.com
 - log in using same account as above
 - open project created above
 - click on Execute above the amain.ts file
 
-```
+### Deploy and run with URL
 
-```
+First time:
+
+- https://script.google.com
+- log in using same account as above
+- open project created above
+- First time:
+  - Deploy
+  - New Deployment
+  - Enter info (optional)
+  - Click Deploy
+  - Click on lin
+- If not first time, you have multiple choices
+  - Option A: Test Deployment
+    - Click on Deploy
+    - Click on Test Deployment
+    - Click on link (will use same link each time)
+  - Option B: New deployment with new link
+    - Click on Deploy
+    - Click on New Deployment
+    - Enter info (optional)
+    - Click on Deploy
+    - Click on link (will be a new link)
+  - Option C: Update existing deployment, keep link
+    - Click on Manage Deploy
+    - Select most recent deployment and click Edit
+    - Change Version to "New version"
+    - Enter info (optional)
+    - Click on Deploy
+    - Click on link (will not change the link of the deployment)
