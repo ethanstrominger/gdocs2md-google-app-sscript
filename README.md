@@ -1,6 +1,6 @@
 # Google Docs to HTML Converter
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md), [RESOURCES.md](./RESOURCES.md) and ([GitHub issue #2978](https://github.com/hackforla/website/issues/2978).
+See [CONTRIBUTING.md](./CONTRIBUTING.md), [RESOURCES.md](./RESOURCES.md) and [GitHub issue #2978](https://github.com/hackforla/website/issues/2978).
 
 
 This README is currently mostly a placeholder for later content.  Come back later or contact ethanstrominger via HfLA Slack / ethanstrominger2@gmail.com
