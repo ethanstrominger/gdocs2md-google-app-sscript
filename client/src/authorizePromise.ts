@@ -1,3 +1,5 @@
+import { createImportSpecifier } from "typescript";
+
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
@@ -25,8 +27,10 @@ export async function authorizePromise() {
     resolve(authorize(credentials, resolve));
   });
 }
-function authorize(credentials, callback) {
+async function authorize(credentials, callback) {
+  console.log("authorize", credentials);
   const { client_secret, client_id, redirect_uris } = credentials.installed;
+  console.log("authorize 3", client_secret, client_id, redirect_uris);
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
@@ -34,10 +38,22 @@ function authorize(credentials, callback) {
   );
 
   // Check if we have previously stored a token.
-  const token = fs.readFileSync(TOKEN_PATH);
-  // if (err) return getAccessToken(oAuth2Client, callback);
-  oAuth2Client.setCredentials(JSON.parse(token));
+  let token;
+  try {
+    token = fs.readFileSync(TOKEN_PATH).toString();
+  } catch {
+    token = await getAccessTokenPromise(oAuth2Client);
+  }
+  console.log("yplr", token);
+  oAuth2Client.setCredentials(token);
+  console.log("authorize 4");
   callback(oAuth2Client);
+}
+
+function getAccessTokenPromise(oAuth2Client) {
+  return new Promise((resolve) => {
+    getAccessToken(oAuth2Client, resolve);
+  });
 }
 /**
  * Get and store new token after prompting for user authorization, and then
@@ -59,9 +75,13 @@ function getAccessToken(oAuth2Client, callback) {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error("Error retrieving access token", err);
+      console.log("token", token);
       oAuth2Client.setCredentials(token);
+      console.log("Going here");
+      console.log("g", JSON.stringify(token));
       // Store the token to disk for later program executions
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+        console.log("Err?", token, err);
         if (err) return console.error(err);
         console.log("Token stored to", TOKEN_PATH);
       });
