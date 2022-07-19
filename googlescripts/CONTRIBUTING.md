@@ -5,7 +5,7 @@
 
 ```
 cd <root>
-cd googlescript
+cd googlescripts
 yarn global add @google/clasp
 yarn
 # below command opens browser for you to login to clasp as a global user
@@ -20,7 +20,26 @@ clasp push
 
 **ALWAYS PUSH TO CLASP, NEVER PULL**
 
-- follow instructions for executing the app script from the browser
+### Modify Code
+
+- pull code from GitHub
+- make changes using your favorite editor
+- from terminal:
+
+```
+cd googlescripts/src
+clasp login # if not logged in
+clasp push
+```
+
+If you get a message that .clasp.json does not exist, try `cp ../.clasp.json-example .clasp.json` and modify file with
+your project id and directory. To find your project id, open your project in script.google.com and click on the gear icon
+
+- execute from browser (see next section)
+
+**NEVER MODIFY CODE FROM BROWSER**
+
+**ALWAYS PUSH TO CLASP, NEVER PULL**
 
 ### Execute Code from Browser
 
@@ -29,13 +48,6 @@ clasp push
 - open project created above
 - click on Execute above the amain.ts file
 
-### Modify Code
+```
 
-- pull code from GitHub
-- make changes using your favorite editor
-- clasp push
-- execute from browser (see previous section)
-
-**NEVER MODIFY CODE FROM BROWSER**
-
-**ALWAYS PUSH TO CLASP, NEVER PULL**
+```

@@ -1,4 +1,4 @@
-See [contribuiting.md in googleScript directory](googleScript/Contributing.md)
+See [contribuiting.md in googlescripts directory](googleScript/Contributing.md)
 
 <!-- One time set up:
 
