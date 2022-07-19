@@ -65,17 +65,17 @@ First time:
   - Option A: Test Deployment
     - Click on Deploy
     - Click on Test Deployment
-    - Click on link (will use same link each time)
+    - Click on link (**test deployments always use the same link**)
   - Option B: New deployment with new link
     - Click on Deploy
     - Click on New Deployment
     - Enter info (optional)
     - Click on Deploy
-    - Click on link (will be a new link)
+    - Click on link (**creates a new deployment id and link**)
   - Option C: Update existing deployment, keep link
     - Click on Manage Deploy
     - Select most recent deployment and click Edit
     - Change Version to "New version"
     - Enter info (optional)
     - Click on Deploy
-    - Click on link (will not change the link of the deployment)
+    - Click on link (**does not change deployment id or link of selected deployment**)
