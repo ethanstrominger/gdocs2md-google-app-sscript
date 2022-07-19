@@ -1,12 +1,11 @@
+### Coding Resources
 - [Code lab from Google](https://codelabs.developers.google.com/codelabs/clasp)
 - [Quick Setup for Google Clasp](https://jasonjurotich.medium.com/quick-setup-for-google-clasp-fb4b8fc51f39)
 - [Useful GitHub Code](https://github.com/oazabir/GoogleDoc2Html) is an open source project is a promising starting point based on initial testing. Bullets, headings, font, images, and color were all preserved. No license is specified. It was the top hit in google.
 
 - Alyssa built the Apps Script as seen in this [link](https://script.google.com/home/projects/1CFED97nWJO_zVzDvrN6wUztJVZQaDFUhrSKe3BXaaHhV02X5AgqT4mRR/edit). Alyssa is moving off the project and @ethanstrominger is now working on it.
 
-- [ ] Create a method that replaces every double quote with backticks in the markdown, e.g. Enter "/Remind" into the field, into copy and paste text, e.g., Enter `/Remind` into the field. More information [here](https://github.com/hackforla/guides/issues/10#issuecomment-936572293).
-
-#### Findings
+### Findings
 
 - Read [DR: Use an existing add on converter called Docs to Markdown](https://github.com/hackforla/website/wiki/DR:-Use-an-existing-add-on-converter-called-Docs-to-Markdown) to learn about the add-on we were using and why we stopped using it.
 
