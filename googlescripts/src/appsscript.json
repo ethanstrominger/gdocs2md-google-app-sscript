@@ -1,7 +1,7 @@
 {
+  "oauthScopes": ["https://www.googleapis.com/auth/drive.metadata.readonly"],
   "timeZone": "America/New_York",
-  "dependencies": {
-  },
+  "dependencies": {},
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8"
 }

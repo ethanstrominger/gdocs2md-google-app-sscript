@@ -31,16 +31,17 @@ async function authorize(credentials, callback) {
   console.log("authorize", credentials);
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   console.log("authorize 3", client_secret, client_id, redirect_uris);
+  console.log("here");
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
-    redirect_uris[0]
+    "https://locagitlhost:3000"
   );
 
   // Check if we have previously stored a token.
   let token;
   try {
-    token = fs.readFileSync(TOKEN_PATH).toString();
+    token = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
   } catch {
     token = await getAccessTokenPromise(oAuth2Client);
   }
