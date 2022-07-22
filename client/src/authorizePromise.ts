@@ -5,7 +5,11 @@ const readline = require("readline");
 const { google } = require("googleapis");
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"];
+const SCOPES = [
+  "https://www.googleapis.com/auth/drive",
+  "https://www.googleapis.com/auth/drive.scripts",
+  "https://www.googleapis.com/auth/script.external_request",
+];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -40,11 +44,11 @@ async function authorize(credentials, callback) {
   // Check if we have previously stored a token.
   let token;
   try {
-    token = fs.readFileSync(TOKEN_PATH).toString();
+    token = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
   } catch {
     token = await getAccessTokenPromise(oAuth2Client);
   }
-  console.log("yplr", token);
+  console.log("token", token);
   oAuth2Client.setCredentials(token);
   console.log("authorize 4");
   callback(oAuth2Client);
