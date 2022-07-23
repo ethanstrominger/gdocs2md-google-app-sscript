@@ -1,29 +1,8 @@
-var fs = require("fs");
-var readline = require("readline");
 import * as google from "googleapis";
 import { authorizePromise } from "./authorizePromise";
-var googleAuth = require("google-auth-library");
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const SCOPES = [
-  "https://www.googleapis.com/auth/drive",
-  "https://www.googleapis.com/auth/drive.scripts",
-  "https://www.googleapis.com/auth/script.external_request",
-];
-var TOKEN_DIR =
-  (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) +
-  "/.credentials/";
-var TOKEN_PATH = TOKEN_DIR + "script-nodejs-quickstart.json";
-
-// Load client secrets from a local file.
-// fs.readFile("client_secret.json", function processClientSecrets(err, content) {
-//   if (err) {
-//     console.log("Error loading client secret file: " + err);
-//     return;
-//   }
-//   // Authorize a client with the loaded credentials, then call the
-//   // Google Apps Script Execution API.
-//   authorize(JSON.parse(content), callAppsScript);
-// });
 main();
 async function main() {
   const auth = await authorizePromise();
@@ -38,8 +17,8 @@ async function main() {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function callAppsScript(auth) {
-  var scriptId =
-    "AKfycby9wQ-hZJib45S0zrEt5z2QzfzDUPv1mO99WQE8fU3InH2NAiJAaNo6mPSyQzyEv_mjdQ";
+  var scriptId = process.env.SCRIPT_ID;
+  console.log("Script ID: ", scriptId);
   var script = new google.script_v1.Script({});
 
   // Make the API request. The request object is included here as 'resource'.
@@ -48,7 +27,7 @@ function callAppsScript(auth) {
     {
       auth: auth,
       scriptId: scriptId,
-      requestBody: { function: "myFunction", devMode: true },
+      requestBody: { function: "doGet", devMode: true },
     },
     function (err, resp) {
       if (err) {
