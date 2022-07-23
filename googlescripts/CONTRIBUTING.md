@@ -60,7 +60,9 @@ clasp push
 - In browser, find clasp tab or open https://script.google.com
 - Select project you created with `clasp create` from drop down
 - Deploy (upper right) => New Deploy
-- Select WebApp (may not be necessary - TBD) and API Executable from
+- Select WebApp (may not be necessary - TBD) and API Executable from 
+<img width="744" alt="image" src="https://user-images.githubusercontent.com/32078396/180614343-3d361498-2e2c-49b7-8e7c-bbb2efa01a23.png">
+
 - Click Deploy
 
 - Click on < > icon on left to open tab
