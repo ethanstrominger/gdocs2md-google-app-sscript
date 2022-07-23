@@ -4,7 +4,7 @@
 
 - If you do not have a Google App Script account
   - from browser, log into a Google account
-  - visit https://script.google.com/home/usersettings
+  - visit https:/cd/script.google.com/home/usersettings
   - turn on Google Apps Script API
 
 #### Clone from GitHub
