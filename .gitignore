@@ -1,10 +1,12 @@
 node_modules
-.clasp.json
+.clasp*.json
 dest
 yarn-error.log
-token.json
+token*.json
 out
 .*.json-old
 *.json-old
 .clasprc.json
-credentials.json
+credentials*.json
+.env*
+

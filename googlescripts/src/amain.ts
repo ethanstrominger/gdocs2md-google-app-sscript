@@ -2,9 +2,9 @@
 // import { getHtml } from "./convert";
 // import { getFolders } from "./utils
 export function doGet(e) {
+  console.log("doGet");
   var action = e?.parameter?.action || "getfiles";
-  var inputFolderName =
-    e?.parameter?.inputfoldername || "test-html-from-googledocs/full/";
+  var inputFolderName = e?.parameter?.inputfoldername || "test";
   // var action = e?.parameter?.action || 'getfiles'
   // var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs'
   var fileName = e?.parameter?.filename || "all";
@@ -24,7 +24,7 @@ function mainProcess(options) {
     const root = utils.getFolder(folderName);
     populateFileList(fileList, root, parentFolderName);
     console.log(fileList);
-    return HtmlService.createHtmlOutput(JSON.stringify(fileList));
+    return JSON.stringify(fileList);
   } else {
     console.log("calling covertdoc");
     var html = ConvertGoogleDocToCleanHtml(
@@ -32,7 +32,7 @@ function mainProcess(options) {
       options.fileName
     );
     console.log("returned from convertdoc", html);
-    return HtmlService.createHtmlOutput(html);
+    return html;
   }
 }
 

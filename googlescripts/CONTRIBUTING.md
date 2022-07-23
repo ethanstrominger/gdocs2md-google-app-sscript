@@ -33,40 +33,12 @@ clasp login --no-localhost # prompts you to log in
   - Copy the authorization code from the browser, paste into the terminal, and press enter.
   - Confirm you see a message "Authorization successful"
 
-After you have logged into clasp:
+(Note: You can change project name googledocs-html-converter if desired, this is your personal project) After you have logged into clasp:
 
 ```
-# You can change project name googledocs-html-converter if desired
 clasp create --title googledocs-html-converter --type standalone
 clasp push
 ```
-
-#### Clould Set Up
-
-- create a Google Cloud project (https://console.cloud.google.com)
-  - copy the project number
-- Enable App Script API is enabled
-- associate the cloud project with your app script
-
-  - from the app script page for the project, click on settings Gear icon
-  - click on Change Project under `Google Cloud Platform (GCP) Project`
-    ![image](https://user-images.githubusercontent.com/32078396/178492415-12da0aa5-b5dc-431e-8a2c-cb08d4405de5.png)
-  - click on link to navigate to GCP project associated with this project
-  - enter the project number in the dialog on the App Script screen
-    ![image](https://user-images.githubusercontent.com/32078396/178491762-d5d48dab-191d-41e1-b7ff-3b3315f9d734.png)
-
-#### Deploy Clasp Project
-
-- In browser, find clasp tab or open https://script.google.com
-- Select project you created with `clasp create` from drop down
-- Deploy (upper right) => New Deploy
-- Select WebApp (may not be necessary - TBD) and API Executable from 
-<img width="744" alt="image" src="https://user-images.githubusercontent.com/32078396/180614343-3d361498-2e2c-49b7-8e7c-bbb2efa01a23.png">
-
-- Click Deploy
-
-- Click on < > icon on left to open tab
-- Click on Execute on top bar
 
 ### Modify Code
 
@@ -75,7 +47,7 @@ clasp push
 - from terminal:
 
 ```
-cd googlescripts/src
+cd googlescripts
 clasp login # if not logged in
 clasp push
 ```

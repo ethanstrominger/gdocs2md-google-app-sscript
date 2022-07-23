@@ -1,6 +1,7 @@
 let depth = 0;
 namespace convert {
   export function getHtml(doc) {
+    console.log("okay");
     var body = doc.getBody();
     var numChildren = body.getNumChildren();
     var output: string[] = [];
