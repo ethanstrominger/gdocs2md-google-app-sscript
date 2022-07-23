@@ -3,7 +3,7 @@ called from the eXpress Server, the command line, a batch job, or directly from 
 
 The google script directory includes a separate [CONTRIBUTING.md in googleScript directory](googleScript/CONTRIBUTING.md). See [RESOURCES.md](./RESOURCES.md) for additional information.
 
-<!-- One time set up:
+One time set up:
 
 - create a GCP project with appropriate privileges
 - fork this repository

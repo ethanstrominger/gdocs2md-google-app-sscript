@@ -4,43 +4,65 @@
 
 - If you do not have a Google App Script account
   - from browser, log into a Google account
-  - visit https:/cd/script.google.com/home/usersettings
+  - visit https:/script.google.com/home/usersettings
   - turn on Google Apps Script API
 
 #### Clone from GitHub
 
 - Fork repo and clone the fork to a local directory
-- Commands to execute after you cloned
+- From terminal
 
 ```
-cd html-markdown-conversion
-cd googlescripts/src
+cd googledocs-html-converter
+cd googlescripts
 yarn
 ```
 
 #### Clasp Setup
 
-From terminal:
+- From terminal:
 
 ```
 yarn global add @google/clasp
 clasp login --no-localhost # prompts you to log in
 ```
 
+- If the script displays a URL and asks you to enter a code:
+  - Click on the URL or paste into a browser
+  - Click Allow when prompted for permissions
+  - Copy the authorization code from the browser, paste into the terminal, and press enter.
+  - Confirm you see a message "Authorization successful"
+
 After you have logged into clasp:
 
 ```
-# You can change html-markdown-conversion to customize the project name
-clasp create --title html-markdown-conversion --type standalone
-clasp
+# You can change project name googledocs-html-converter if desired
+clasp create --title googledocs-html-converter --type standalone
+clasp push
 ```
+
+#### Clould Set Up
+
+- create a Google Cloud project (https://console.cloud.google.com)
+  - copy the project number
+- Enable App Script API is enabled
+- associate the cloud project with your app script
+
+  - from the app script page for the project, click on settings Gear icon
+  - click on Change Project under `Google Cloud Platform (GCP) Project`
+    ![image](https://user-images.githubusercontent.com/32078396/178492415-12da0aa5-b5dc-431e-8a2c-cb08d4405de5.png)
+  - click on link to navigate to GCP project associated with this project
+  - enter the project number in the dialog on the App Script screen
+    ![image](https://user-images.githubusercontent.com/32078396/178491762-d5d48dab-191d-41e1-b7ff-3b3315f9d734.png)
 
 #### Deploy Clasp Project
 
 - In browser, find clasp tab or open https://script.google.com
 - Select project you created with `clasp create` from drop down
 - Deploy (upper right) => New Deploy
+- Select WebApp (may not be necessary - TBD) and API Executable from
 - Click Deploy
+
 - Click on < > icon on left to open tab
 - Click on Execute on top bar
 
@@ -70,12 +92,11 @@ If you get a message that .clasp.json does not exist, try `cp ../.clasp.json-exa
 
 - https://script.google.com
 - log in if prompted
-- open project created above from drop down
+- select the project you just created from the list
 - to execute from code panel:
   - Go to code panel by clicking on the < > button on the left side
   - click on Execute above the amain.ts file
 - to execute from URL
-
   - Option A: Test Deployment
     - Click on Deploy (upper right)
     - Click on Test Deployment
