@@ -23,11 +23,20 @@ function callAppsScript(auth) {
 
   // Make the API request. The request object is included here as 'resource'.
   console.log("running", auth);
+  const parameters = [
+    {
+      inputFolderName: process.env.INPUT_FOLDER || "test",
+      action: process.env.ACTION || "getfiles",
+      fileName: process.env.FILENAME || "all2",
+      outputFileName: process.env.OUTPUT_FOLDER || "output",
+    },
+  ];
+
   script.scripts.run(
     {
       auth: auth,
       scriptId: scriptId,
-      requestBody: { function: "doGet", devMode: true },
+      requestBody: { function: "doGet", parameters, devMode: true },
     },
     function (err, resp) {
       if (err) {
@@ -63,14 +72,7 @@ function callAppsScript(auth) {
           "response",
           Object.keys(resp),
           Object.values(resp),
-          // "resp data",
-          // Object.keys(resp.data),
-          // "xxxxx",
-          // Object.values(resp.data),
-          // "xxxxx",
-          // Object.keys(resp.data.response),
-          // "xxxxx",
-          // Object.values(resp.data.response),
+
           JSON.stringify(resp)
         );
         var folderSet = resp.data.response;

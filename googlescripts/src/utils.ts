@@ -20,16 +20,19 @@ namespace utils {
   }
 
   export function getFolder(folderName) {
-    var dirs = folderName.split("/");
-    DriveApp.getFolders().next();
+    const dirs = folderName.split("/");
     console.log("getting folders");
-    var folder = DriveApp.getFoldersByName(dirs[0]).next();
-    for (var x = 1; x < dirs.length; x++) {
-      var dirName = dirs[x];
-      if (dirName) {
-        folder = folder.getFoldersByName(dirName).next();
+    let folder = DriveApp.getRootFolder();
+    let dirName = "";
+
+    for (var x = 0; x < dirs.length; x++) {
+      dirName = dirName + dirs[x] + "/";
+      const matchingFolders = folder.getFoldersByName(dirs[x]);
+      if (!matchingFolders.hasNext()) {
+        return { error: `Dir ${dirName} does not exist` };
       }
+      folder = matchingFolders.next();
     }
-    return folder;
+    return { folder };
   }
 }

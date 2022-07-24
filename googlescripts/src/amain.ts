@@ -2,12 +2,10 @@
 // import { getHtml } from "./convert";
 // import { getFolders } from "./utils
 export function doGet(e) {
-  console.log("doGet");
-  var action = e?.parameter?.action || "getfiles";
-  var inputFolderName = e?.parameter?.inputfoldername || "test";
-  // var action = e?.parameter?.action || 'getfiles'
-  // var inputFolderName = e?.parameter?.inputfoldername || 'test-html-from-googledocs'
-  var fileName = e?.parameter?.filename || "all";
+  console.log("doGet parameters", JSON.stringify(e));
+  var action = e?.action || "getfiles";
+  var inputFolderName = e?.inputFolderName || "test";
+  var fileName = e?.fileName || "all";
   return mainProcess({ action, inputFolderName, fileName });
 }
 
@@ -22,7 +20,12 @@ function mainProcess(options) {
     const parentFolderName = folderName.substr(0, lastSlash + 1);
     console.log("parent", parentFolderName);
     const root = utils.getFolder(folderName);
-    populateFileList(fileList, root, parentFolderName);
+    console.log("root", root);
+    if (root.error) {
+      return root;
+    }
+    const rootFolder = root.folder as GoogleAppsScript.Drive.Folder;
+    populateFileList(fileList, rootFolder, parentFolderName);
     console.log(fileList);
     return JSON.stringify(fileList);
   } else {
@@ -37,8 +40,12 @@ function mainProcess(options) {
 }
 
 function ConvertGoogleDocToCleanHtml(folderName, fileName) {
+  // todo: change utils.getFolder to return an object with a folder property
   var subFolder = utils.getFolder(folderName);
-  var file = subFolder.getFilesByName(fileName).next();
+  if (!subFolder.folder) {
+    return subFolder.error;
+  }
+  var file = subFolder.folder.getFilesByName(fileName).next();
   console.log("file", file.getName());
   var doc = DocumentApp.openById(file.getId());
   console.log("calling getHtml");
