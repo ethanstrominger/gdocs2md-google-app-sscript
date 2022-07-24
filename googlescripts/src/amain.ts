@@ -6,7 +6,9 @@ export function doGet(e) {
   var action = e?.action || "getfiles";
   var inputFolderName = e?.inputFolderName || "test";
   var fileName = e?.fileName || "all";
-  return mainProcess({ action, inputFolderName, fileName });
+  const m = mainProcess({ action, inputFolderName, fileName });
+  console.log("debug x", m);
+  return m;
 }
 
 function mainProcess(options) {
@@ -21,9 +23,6 @@ function mainProcess(options) {
     console.log("parent", parentFolderName);
     const root = utils.getFolder(folderName);
     console.log("root", root);
-    if (root.error) {
-      return root;
-    }
     const rootFolder = root.folder as GoogleAppsScript.Drive.Folder;
     populateFileList(fileList, rootFolder, parentFolderName);
     console.log(fileList);

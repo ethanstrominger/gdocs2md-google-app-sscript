@@ -44,23 +44,16 @@ function callAppsScript(auth) {
         console.log("The API returned an error: " + err);
         return;
       }
-      if (resp.error) {
+      console.log("debug data", resp.data);
+      if (resp.data.error) {
         // The API executed, but the script returned an error.
 
         // Extract the first (and only) set of error details. The values of this
         // object are the script's 'errorMessage' and 'errorType', and an array
         // of stack trace elements.
-        var error = resp.error.details[0];
-        console.log("Script error message: " + error.errorMessage);
+        var error = resp.data.error.details[0];
         console.log("Script error stacktrace:");
-
-        if (error.scriptStackTraceElements) {
-          // There may not be a stacktrace if the script didn't start executing.
-          for (var i = 0; i < error.scriptStackTraceElements.length; i++) {
-            var trace = error.scriptStackTraceElements[i];
-            console.log("\t%s: %s", trace.function, trace.lineNumber);
-          }
-        }
+        console.log(error.scriptStackTraceElements);
       } else {
         // The structure of the result will depend upon what the Apps Script
         // function returns. Here, the function returns an Apps Script Object

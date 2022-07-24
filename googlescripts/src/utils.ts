@@ -29,7 +29,7 @@ namespace utils {
       dirName = dirName + dirs[x] + "/";
       const matchingFolders = folder.getFoldersByName(dirs[x]);
       if (!matchingFolders.hasNext()) {
-        return { error: `Dir ${dirName} does not exist` };
+        throw `Dir ${dirName} really does not exist`;
       }
       folder = matchingFolders.next();
     }
