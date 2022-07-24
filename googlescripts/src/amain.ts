@@ -41,9 +41,6 @@ function mainProcess(options) {
 function ConvertGoogleDocToCleanHtml(folderName, fileName) {
   // todo: change utils.getFolder to return an object with a folder property
   var subFolder = utils.getFolder(folderName);
-  if (!subFolder.folder) {
-    return subFolder.error;
-  }
   var file = subFolder.folder.getFilesByName(fileName).next();
   console.log("file", file.getName());
   var doc = DocumentApp.openById(file.getId());
