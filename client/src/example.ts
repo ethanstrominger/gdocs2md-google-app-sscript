@@ -1,13 +1,24 @@
 import * as google from "googleapis";
 import { authorizePromise } from "./authorizePromise";
 import * as dotenv from "dotenv";
+import * as type from "./types";
+import { OAuth2Client } from "google-auth-library";
 dotenv.config();
 
 main();
 async function main() {
-  const auth = await authorizePromise();
-  console.log("abut to call");
-  callAppsScript(auth);
+  const auth = (await authorizePromise()) as OAuth2Client;
+  const parameters = {
+    folderName: process.env.INPUT_FOLDER,
+    action: process.env.ACTION,
+    fileName: process.env.FILENAME,
+    outputFolderName: process.env.OUTPUT_FOLDER,
+  } as type.Params;
+  if (parameters.action.startsWith("get")) {
+    callAppsScript(auth, parameters as type.GetFilesParam);
+  } else {
+    convertAllHtml(auth, parameters as type.ConvertDocsParam);
+  }
 }
 
 /**
@@ -16,27 +27,23 @@ async function main() {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-async function callAppsScript(auth) {
+async function callAppsScript(auth, parameters: type.Params) {
   var scriptId = process.env.SCRIPT_ID;
   console.log("Script ID: ", scriptId);
   var script = new google.script_v1.Script({});
 
   // Make the API request. The request object is included here as 'resource'.
-  console.log("running", auth);
-  const parameters = [
-    {
-      inputFolderName: process.env.INPUT_FOLDER || "test",
-      action: process.env.ACTION || "getfiles",
-      fileName: process.env.FILENAME || "all2",
-      outputFileName: process.env.OUTPUT_FOLDER || "output",
-    },
-  ];
   let resp;
+  console.log("debug callappsscript", parameters);
   try {
     resp = await script.scripts.run({
       auth: auth,
       scriptId: scriptId,
-      requestBody: { function: "doGet", parameters, devMode: true },
+      requestBody: {
+        function: "doGet",
+        parameters: [parameters],
+        devMode: true,
+      },
     });
   } catch (err) {
     if (err) {
@@ -45,7 +52,6 @@ async function callAppsScript(auth) {
       return;
     }
   }
-  console.log("debug data", resp.data);
   if (resp.data.error) {
     // The API executed, but the script returned an error.
     var error = resp.data.error.details[0];
@@ -62,5 +68,33 @@ async function callAppsScript(auth) {
   console.log("Folders under your root folder:");
   Object.keys(folderSet).forEach(function (id) {
     console.log("\t%s (%s)", folderSet[id], id);
+  });
+  return folderSet;
+}
+
+async function convertAllHtml(
+  auth: OAuth2Client,
+  parameters: type.ConvertDocsParam
+) {
+  const filesJson = await getFiles(auth, parameters as type.ConvertDocsParam);
+  const files = JSON.parse(filesJson.result) as [
+    { folderName: string; fileName: string }
+  ];
+  files.forEach(async (file) => {
+    const resp = await callAppsScript(auth, {
+      action: "getHtml",
+      folderName: file.folderName,
+      fileName: file.fileName,
+    });
+  });
+}
+
+async function getFiles(auth: OAuth2Client, parameters: type.Params) {
+  const params = {
+    action: "getFiles",
+    folderName: parameters.folderName,
+  };
+  return await callAppsScript(auth, {
+    folderName: parameters.folderName,
   });
 }

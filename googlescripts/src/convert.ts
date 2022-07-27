@@ -1,7 +1,6 @@
 let depth = 0;
 namespace convert {
   export function getHtml(doc) {
-    console.log("okay");
     var body = doc.getBody();
     var numChildren = body.getNumChildren();
     var output: string[] = [];
@@ -11,13 +10,11 @@ namespace convert {
     // Walk through all the child elements of the body.
     for (var i = 0; i < numChildren; i++) {
       var child = body.getChild(i);
-      console.log("loop calling and pushing processItem (depth,i)", depth, i);
       output.push(processItem(child, listCounters, images));
       depth = depth - 1;
     }
 
     var html = output.join("\n");
-    console.log("getHtml returning", html);
     return html;
   }
 }
@@ -28,9 +25,7 @@ function processItem(
   images: any,
   skipParagraphTag = false
 ): string {
-  console.log("defined", "skipping", skipParagraphTag);
   depth = depth + 1;
-  console.log("start processItem");
   var output: String[] = [];
   var prefix = "",
     suffix = "";
@@ -52,7 +47,6 @@ function processItem(
   } else if (item.getType() === DocumentApp.ElementType.LIST_ITEM) {
     ({ prefix, suffix } = processList(item, listCounters, prefix, suffix));
   }
-  console.log("pushing prefix", prefix);
 
   output.push(prefix);
 
@@ -130,16 +124,13 @@ function processChildren(
   skipParagraphTagFirstChild = false
 ) {
   var numChildren = item.getNumChildren();
-  console.log("loop 2", numChildren);
 
   // Walk through all the child elements of the doc.
   for (var i = 0; i < numChildren; i++) {
     const skipParagraphTag = skipParagraphTagFirstChild && i === 0;
-    console.log("depth, i", depth, i);
     var child = item.getChild(i);
     output.push(processItem(child, listCounters, images, skipParagraphTag));
     depth = depth - 1;
-    console.log("depth, i", depth, i);
   }
 }
 
@@ -149,7 +140,6 @@ function processParagraph(
   suffix: string,
   skipParagraphTag = false
 ) {
-  console.log("processing paragraph", skipParagraphTag);
   switch (item.getHeading()) {
     // Add a # for each heading level. No break, so we accumulate the right number.
     case DocumentApp.ParagraphHeading.HEADING6:
@@ -175,15 +165,12 @@ function processParagraph(
         (prefix = "<p>"), (suffix = "</p>");
       }
   }
-  console.log("prefix", prefix, item.getNumChildren());
   return { prefix, suffix };
 }
 
 function processText(item, output) {
   var text = item.getText();
-  console.log("text is", text);
   var indices = item.getTextAttributeIndices();
-  console.log("indices", indices.length);
 
   if (indices.length <= 1) {
     // Assuming that a whole para fully italic is a quote
@@ -268,7 +255,6 @@ function processImage(item, images, output) {
 }
 
 function processTable(item: GoogleAppsScript.Document.Table, output: String[]) {
-  console.log("processing table");
   output.push("<table>");
   const numRows = item.getNumRows();
   for (let i = 0; i < numRows; i++) {
@@ -278,7 +264,6 @@ function processTable(item: GoogleAppsScript.Document.Table, output: String[]) {
 }
 
 function processRow(row: GoogleAppsScript.Document.TableRow, output) {
-  console.log("processing row", row.getText());
   output.push("<tr>");
   const numCells = row.getNumCells();
   for (let i = 0; i < numCells; i++) {
@@ -287,6 +272,5 @@ function processRow(row: GoogleAppsScript.Document.TableRow, output) {
   output.push("</tr>");
 }
 function processCell(cell: GoogleAppsScript.Document.TableCell, output) {
-  console.log("processing cell", cell.getText());
   output.push(processItem(cell, output, null, true));
 }

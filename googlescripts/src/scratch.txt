@@ -49,9 +49,9 @@
 // }
 
 
-// function processFolder(filesFolder, outputFolder) {
-//   console.log('Processing folder', filesFolder.getName());
-//   var files = filesFolder.getFiles();
+// function processFolder(folder, outputFolder) {
+//   console.log('Processing folder', folder.getName());
+//   var files = folder.getFiles();
 //   while (files.hasNext()){
 //     var file = files.next()
 //     var doc = DocumentApp.openById(file.getId());
@@ -60,7 +60,7 @@
 //     // emailHtml(doc, html, images);
 //     createDocumentForHtml(outputFolder, doc, html, images);
 //   }
-//   var folders = filesFolder.getFolders();
+//   var folders = folder.getFolders();
 //   while (folders.hasNext()) {
 //     var folder= folders.next()
 //     var folderName = folder.getName();

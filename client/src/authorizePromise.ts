@@ -26,9 +26,7 @@ export async function authorizePromise() {
   });
 }
 async function authorize(credentials, callback) {
-  console.log("authorize", credentials);
   const { client_secret, client_id, redirect_uris } = credentials.installed;
-  console.log("authorize 3", client_secret, client_id, redirect_uris);
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
@@ -42,9 +40,7 @@ async function authorize(credentials, callback) {
   } catch {
     token = await getAccessTokenPromise(oAuth2Client);
   }
-  console.log("token", token);
   oAuth2Client.setCredentials(token);
-  console.log("authorize 4");
   callback(oAuth2Client);
 }
 
@@ -64,7 +60,6 @@ function getAccessToken(oAuth2Client, callback) {
     access_type: "offline",
     scope: SCOPES,
   });
-  console.log("Authorize this app by visiting this url:", authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -73,10 +68,7 @@ function getAccessToken(oAuth2Client, callback) {
     rl.close();
     oAuth2Client.getToken(code, (err, token) => {
       if (err) return console.error("Error retrieving access token", err);
-      console.log("token", token);
       oAuth2Client.setCredentials(token);
-      console.log("Going here");
-      console.log("g", JSON.stringify(token));
       // Store the token to disk for later program executions
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
         console.log("Err?", token, err);
