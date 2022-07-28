@@ -3,6 +3,7 @@ namespace convert {
   export function getHtml(doc) {
     var body = doc.getBody();
     var numChildren = body.getNumChildren();
+    console.log("numChildren", numChildren);
     var output: string[] = [];
     var images = [];
     var listCounters = {};

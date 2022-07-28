@@ -20,13 +20,15 @@ function mainProcess(options) {
   if (options.action === "getFiles") {
     return getFiles(options);
   } else {
-    convertFiles(options);
+    var html = getHtml(options.folderName, options.fileName);
+    console.log("html", html);
+    return html;
   }
 }
 
 function convertFiles(options: any) {
   const files = getFiles(options);
-  var html = ConvertGoogleDocToCleanHtml(options.folderName, options.fileName);
+  var html = getHtml(options.folderName, options.fileName);
   return html;
 }
 
@@ -44,16 +46,15 @@ function getFiles(options: any) {
   return JSON.stringify(fileList);
 }
 
-function ConvertGoogleDocToCleanHtml(folderName, fileName) {
+async function getHtml(folderName, fileName) {
   // todo: change utils.getFolder to return an object with a folder property
   var subFolder = utils.getFolder(folderName);
   var file = subFolder.folder.getFilesByName(fileName).next();
-  // var doc = DocumentApp.openById(file.getId());
-  // console.log("calling getHtml");
-  // const html = convert.getHtml(doc);
-  const html = "xyz";
+  var doc = DocumentApp.openById(file.getId());
+  console.log("calling getHtml");
+  const html = convert.getHtml(doc);
   console.log("returned from getHtml", html);
-  return "temp";
+  return html;
 }
 
 function populateFileList(fileList, folder, parentFolderName) {
