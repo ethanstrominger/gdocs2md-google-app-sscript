@@ -9,17 +9,21 @@ dotenv.config();
 main();
 async function main() {
   const auth = (await authorizePromise()) as OAuth2Client;
-  const parameters = {
+  const getFilesParams = {
+    action: "getFiles",
+    inputFolderName: process.env.INPUT_FOLDER,
+  };
+  const convertParams = {
     inputFolderName: process.env.INPUT_FOLDER,
     action: process.env.ACTION,
     fileName: process.env.FILENAME,
     outputFolderName: process.env.OUTPUT_FOLDER,
   } as type.Params;
-  if (parameters.action.startsWith("get")) {
-    await callAppsScript(auth, parameters as type.GetFilesParam);
+  if (process.env.ACTION.startsWith("get")) {
+    await callAppsScript(auth, getFilesParams as type.GetFilesParam);
   } else {
     console.log("debug Calling convert html");
-    await convertAllHtml(auth, parameters as type.GetHtmlParam);
+    await convertAllHtml(auth, convertParams as type.GetHtmlParam);
     console.log("debug done");
   }
 }
@@ -75,9 +79,10 @@ async function convertAllHtml(
   auth: OAuth2Client,
   parameters: type.GetHtmlParam
 ) {
-  console.log("calling getFiles");
+  const inputFolderName = addSlash(parameters.inputFolderName);
+  const outputFolderName =
+    addSlash(parameters.outputFolderName) + inputFolderName;
   const filesJson = await getFiles(auth, parameters as type.GetHtmlParam);
-  console.log("done get files", filesJson);
   const files = JSON.parse(filesJson) as [
     { inputFolderName: string; fileName: string }
   ];
@@ -86,13 +91,20 @@ async function convertAllHtml(
     console.log("debug file", file);
     const html = await callAppsScript(auth, {
       action: "getHtml",
-      inputFolderName: file.inputFolderName,
+      inputFolderName: inputFolderName,
       fileName: file.fileName,
     });
     console.log("debug html", html);
-    fs.mkdirSync(file.inputFolderName, { recursive: true });
-    fs.writeFileSync(file.inputFolderName + file.fileName + ".html", html);
+    fs.mkdirSync(outputFolderName, { recursive: true });
+    const outputFileName = outputFolderName + file.fileName + ".html";
+    fs.writeFileSync(outputFileName, html);
   });
+}
+
+function addSlash(folderName) {
+  const outputNeedsSlash = folderName.endsWith("/");
+  const outputFolderName = folderName + (outputNeedsSlash ? "" : "/");
+  return outputFolderName;
 }
 
 async function getFiles(auth: OAuth2Client, parameters: type.Params) {
