@@ -10,7 +10,7 @@ main();
 async function main() {
   const auth = (await authorizePromise()) as OAuth2Client;
   const parameters = {
-    folderName: process.env.INPUT_FOLDER,
+    inputFolderName: process.env.INPUT_FOLDER,
     action: process.env.ACTION,
     fileName: process.env.FILENAME,
     outputFolderName: process.env.OUTPUT_FOLDER,
@@ -19,7 +19,7 @@ async function main() {
     await callAppsScript(auth, parameters as type.GetFilesParam);
   } else {
     console.log("debug Calling convert html");
-    await convertAllHtml(auth, parameters as type.ConvertDocsParam);
+    await convertAllHtml(auth, parameters as type.GetHtmlParam);
     console.log("debug done");
   }
 }
@@ -73,34 +73,34 @@ async function callAppsScript(auth, parameters: type.Params) {
 
 async function convertAllHtml(
   auth: OAuth2Client,
-  parameters: type.ConvertDocsParam
+  parameters: type.GetHtmlParam
 ) {
   console.log("calling getFiles");
-  const filesJson = await getFiles(auth, parameters as type.ConvertDocsParam);
+  const filesJson = await getFiles(auth, parameters as type.GetHtmlParam);
   console.log("done get files", filesJson);
   const files = JSON.parse(filesJson) as [
-    { folderName: string; fileName: string }
+    { inputFolderName: string; fileName: string }
   ];
   console.log("files", files);
   files.forEach(async (file) => {
     console.log("debug file", file);
     const html = await callAppsScript(auth, {
       action: "getHtml",
-      folderName: file.folderName,
+      inputFolderName: file.inputFolderName,
       fileName: file.fileName,
     });
     console.log("debug html", html);
-    fs.mkdirSync(file.folderName, { recursive: true });
-    fs.writeFileSync(file.folderName + file.fileName + ".html", html);
+    fs.mkdirSync(file.inputFolderName, { recursive: true });
+    fs.writeFileSync(file.inputFolderName + file.fileName + ".html", html);
   });
 }
 
 async function getFiles(auth: OAuth2Client, parameters: type.Params) {
   const params = {
     action: "getFiles",
-    folderName: parameters.folderName,
+    inputFolderName: parameters.inputFolderName,
   };
   return await callAppsScript(auth, {
-    folderName: parameters.folderName,
+    inputFolderName: parameters.inputFolderName,
   });
 }

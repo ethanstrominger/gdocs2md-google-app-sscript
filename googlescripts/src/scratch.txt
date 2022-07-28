@@ -63,16 +63,16 @@
 //   var folders = folder.getFolders();
 //   while (folders.hasNext()) {
 //     var folder= folders.next()
-//     var folderName = folder.getName();
-//     var matchingFolders = outputFolder.getFoldersByName(folderName);
+//     var inputFolderName = folder.getName();
+//     var matchingFolders = outputFolder.getFoldersByName(inputFolderName);
 //     // @ts-ignore
 //     if (matchingFolders.hasNext()) {
 //       var outputFolder2 = matchingFolders.next();
 //     } else {
-//       outputFolder2 = outputFolder.createFolder(folderName);
+//       outputFolder2 = outputFolder.createFolder(inputFolderName);
 //     }
 //     if (!outputFolder) {
-//       outputFolder2 = outputFolder.createFolder(folderName);
+//       outputFolder2 = outputFolder.createFolder(inputFolderName);
 //     }
 //     processFolder(folder, outputFolder2);
 //   }

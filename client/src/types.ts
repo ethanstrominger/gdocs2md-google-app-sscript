@@ -1,13 +1,8 @@
-export type GetFilesParam = { action?: "getFiles"; folderName: string };
-export type ConvertDocsParam = {
-  action?: "convertDocs";
-  folderName: string;
-  fileName: string;
-  outputFolderName: string;
-};
+export type GetFilesParam = { action?: "getFiles"; inputFolderName: string };
 export type GetHtmlParam = {
   action?: "getHtml";
-  folderName: string;
+  inputFolderName: string;
   fileName: string;
 };
-export type Params = GetFilesParam | ConvertDocsParam | GetHtmlParam;
+
+export type Params = GetFilesParam | GetHtmlParam;

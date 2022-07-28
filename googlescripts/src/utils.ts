@@ -19,8 +19,8 @@ namespace utils {
     }
   }
 
-  export function getFolder(folderName) {
-    const dirs = folderName.split("/");
+  export function getFolder(inputFolderName) {
+    const dirs = inputFolderName.split("/");
     console.log("getting folders");
     let folder = DriveApp.getRootFolder();
     let dirName = "";
