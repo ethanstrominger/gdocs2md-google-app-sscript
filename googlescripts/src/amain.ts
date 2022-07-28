@@ -53,9 +53,7 @@ async function getHtml(inputFolderName, fileName) {
   var subFolder = utils.getFolder(inputFolderName);
   var file = subFolder.folder.getFilesByName(fileName).next();
   var doc = DocumentApp.openById(file.getId());
-  console.log("calling getHtml");
   const html = convert.getHtml(doc);
-  console.log("returned from getHtml", html);
   return html;
 }
 

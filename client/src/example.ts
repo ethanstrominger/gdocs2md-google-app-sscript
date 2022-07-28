@@ -22,9 +22,7 @@ async function main() {
   if (process.env.ACTION.startsWith("get")) {
     await callAppsScript(auth, getFilesParams as type.GetFilesParam);
   } else {
-    console.log("debug Calling convert html");
     await convertAllHtml(auth, convertParams as type.GetHtmlParam);
-    console.log("debug done");
   }
 }
 
@@ -41,7 +39,6 @@ async function callAppsScript(auth, parameters: type.Params) {
 
   // Make the API request. The request object is included here as 'resource'.
   let resp;
-  console.log("debug callappsscript", parameters);
   try {
     resp = await script.scripts.run({
       auth: auth,
@@ -86,15 +83,13 @@ async function convertAllHtml(
   const files = JSON.parse(filesJson) as [
     { inputFolderName: string; fileName: string }
   ];
-  console.log("files", files);
+  console.log("Processing files", files);
   files.forEach(async (file) => {
-    console.log("debug file", file);
     const html = await callAppsScript(auth, {
       action: "getHtml",
       inputFolderName: inputFolderName,
       fileName: file.fileName,
     });
-    console.log("debug html", html);
     fs.mkdirSync(outputFolderName, { recursive: true });
     const outputFileName = outputFolderName + file.fileName + ".html";
     fs.writeFileSync(outputFileName, html);

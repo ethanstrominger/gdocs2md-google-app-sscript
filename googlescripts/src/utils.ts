@@ -14,14 +14,12 @@ namespace utils {
       file.setContent(combinedContent);
     } else {
       // file not found - create new
-      console.log("creating file text", fileText);
       DriveApp.createFile(fileName, fileText);
     }
   }
 
   export function getFolder(inputFolderName) {
     const dirs = inputFolderName.split("/");
-    console.log("getting folders");
     let folder = DriveApp.getRootFolder();
     let dirName = "";
 
