@@ -1,5 +1,7 @@
 # Google Docs to HTML Converter
 
+AN NPMJS PACKAGE WAS FOUND THAT DOES MOST OF THE WORK.  A NEW PROJECT IS STARTED AT https://github.com/ethanstrominger/hfla-googledocs-converter.
+
 See [CONTRIBUTING.md](./CONTRIBUTING.md), [RESOURCES.md](./RESOURCES.md) and [GitHub issue #2978](https://github.com/hackforla/website/issues/2978).
 
 
