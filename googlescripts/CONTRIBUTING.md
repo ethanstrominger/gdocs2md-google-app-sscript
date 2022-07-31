@@ -48,8 +48,8 @@ clasp push
 
 ```
 cd googlescripts
-clasp login # if not logged in
-clasp push
+clasp login      # if not logged in
+./autopush.sh    # this automates the pushing.  To manually push, do clasp push
 ```
 
 **ALWAYS PUSH TO CLASP, NEVER PULL**

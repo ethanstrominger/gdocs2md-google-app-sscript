@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "ts-node index.js & open http://localhost:3000"
+  },
   "dependencies": {
     "@types/google-apps-script": "^1.0.52",
     "dotenv": "^16.0.1",

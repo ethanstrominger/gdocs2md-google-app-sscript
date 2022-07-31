@@ -1,6 +1,6 @@
 ### One Time Setup
 
-####
+#### Cloud and Authentication Setup
 
 - Create/select project
   - create a Google Cloud project (https://console.cloud.google.com) or use an existing one
@@ -43,8 +43,6 @@
 
 #### Configure Node
 
-#### Configure Node
-
 - Copy the script id of the Apps Script or of one of the deployments.
   - Click the Gear icon to view the script id. The script id for the Apps Script will always execute the most recent code (the Test deployment).
   - Click Deploy => Manage Deployments to view the Deployment ID. This can be used in place of the Script id to select a specific version of the script.
@@ -56,6 +54,18 @@
 ```
 yarn
 ```
+
+#### Configure Images directory
+
+- Create or identify a Google directory to store images that you make public. You must have read/write
+  access.
+- Set up share to be public
+  - Open directory from google drive website
+  - Select Share icon next to the directory name
+  - Under General Access, select Anyone with the link and Viewer from the two dropdowns
+  - Click Done
+- Copy the id from the URL displayed in the location bar. The id is the part of the URL after "folders/".
+- Modify .env to include: `IMAGE_FOLDER_ID=<id from previous step>`
 
 ### Run Script
 

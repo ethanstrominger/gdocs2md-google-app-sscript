@@ -1,9 +1,28 @@
 ### Coding Resources
+
 - [Code lab from Google](https://codelabs.developers.google.com/codelabs/clasp)
 - [Quick Setup for Google Clasp](https://jasonjurotich.medium.com/quick-setup-for-google-clasp-fb4b8fc51f39)
-- [Useful GitHub Code](https://github.com/oazabir/GoogleDoc2Html) is an open source project is a promising starting point based on initial testing. Bullets, headings, font, images, and color were all preserved. No license is specified. It was the top hit in google.
+- npmjs / github resources
 
-- Alyssa built the Apps Script as seen in this [link](https://script.google.com/home/projects/1CFED97nWJO_zVzDvrN6wUztJVZQaDFUhrSKe3BXaaHhV02X5AgqT4mRR/edit). Alyssa is moving off the project and @ethanstrominger is now working on it.
+  - [gatsby-source-google-docs](https://github.com/cedricdelpoux/gatsby-source-google-docs/) Over 300 non-dependabot commits, 2 branches, 80 closed issues, 4 open doc issues, 1 open code issue.  
+    Did a test on one file, set up was made a lot easier by automating
+    processes that you would otherwise have to manually do for credentials
+    and authorizing a Google Cloud project.
+
+    - [fork of above repo used to publish on npm](https://github.com/icaraps/gatsby-source-gdocs2md) and [npm](https://www.npmjs.com/package/gatsby-source-gdocs2md)
+    - wikiGDrive: [github](https://github.com/mieweb/wikiGDrive#readme) [npm](https://www.npmjs.com/package/@mieweb/wikigdrive) Activity is more recent. Set up is not as automated as gatsby option. May have more tests. Looks like it outputs to google drive rather than local, which is less preferable.
+
+    - @ahl389/markdoctor: converts markdown to Google Docs, so not appropriate.
+    - @supersheets/docdown: README consists of a single line, last updated 4 years ago.
+    - parse-google-docs-json: based on gatsby-source-gdocs2md. Has warning that it is for personal use.
+    - google-docs-converter: limited functionality. Outputs on screen, does not write to file, only does one file at a time. Does not support Images, Tables, Centered text, Horizontal Rules (e.g. <hr>), overlapping styled text (bold text inside italic, etc)
+
+- [Stack OverFlow: saving and accessing images with Apps Script](https://stackoverflow.com/questions/65728423/save-the-images-from-a-google-doc-to-google-drive-google-app-script)
+- [Stack Overflow: Displaying Google Drive image on a website](https://stackoverflow.com/questions/15557392/how-do-i-display-images-from-google-drive-on-a-website)
+
+- Archive
+  - Alyssa built the Apps Script as seen in this [link](https://script.google.com/home/projects/1CFED97nWJO_zVzDvrN6wUztJVZQaDFUhrSKe3BXaaHhV02X5AgqT4mRR/edit). Alyssa is moving off the project and @ethanstrominger is now working on it.
+  - [GoogleDoc2Html](https://github.com/oazabir/GoogleDoc2Html) is an open source project that was used as a base in July 2022 by Ethan Strominger. It was the top hit in google. However, searching npmjs.com turned out to be much more fruitful.
 
 ### Findings
 
