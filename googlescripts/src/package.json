@@ -1,0 +1,3 @@
+{
+  "comment": "package.json needs to exist for clasp.push to work"
+}
