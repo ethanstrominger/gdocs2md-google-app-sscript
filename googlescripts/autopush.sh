@@ -1,6 +1,6 @@
    while [[ true ]]
     do
-        chsum2=$(find -L src -type f -exec md5 {} \;)
+        chsum2=$(find -L . -type f -exec md5 {} \;)
         if [[ $chsum1 != $chsum2 ]] ; then
             echo "Found a file change, executing clasp push..."
             clasp push

@@ -16,7 +16,6 @@ export function doGet(e) {
 }
 
 function mainProcess(options) {
-  var fileList = [];
   if (options.action === "getFiles") {
     return getFiles(options);
   } else {
