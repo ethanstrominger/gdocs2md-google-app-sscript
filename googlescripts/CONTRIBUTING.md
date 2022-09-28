@@ -23,7 +23,6 @@ yarn
 - From terminal:
 
 ```
-yarn global add @google/clasp
 clasp login --no-localhost # prompts you to log in
 ```
 
@@ -36,7 +35,7 @@ clasp login --no-localhost # prompts you to log in
 (Note: You can change project name googledocs-html-converter if desired, this is your personal project) After you have logged into clasp:
 
 ```
-cd googlescripts/src
+cd src
 clasp create --title googledocs-html-converter --type standalone
 clasp push
 ```
