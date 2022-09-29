@@ -25,6 +25,7 @@ namespace utils {
 
     for (var x = 0; x < dirs.length; x++) {
       dirName = dirName + dirs[x] + "/";
+      console.log(dirName, dirs);
       const matchingFolders = folder.getFoldersByName(dirs[x]);
       if (!matchingFolders.hasNext()) {
         throw `Cannot find dir ${dirName}`;

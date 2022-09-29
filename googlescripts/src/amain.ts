@@ -6,11 +6,13 @@ import { createImportSpecifier } from "typescript";
 // import { getFolders } from "./utils
 export function doGet(e) {
   const params = Array.isArray(e) ? e[0] : e;
-  console.log("doGet parameters", params);
-  var action = params?.action || "getFiles";
-  var inputFolderName = params?.inputFolderName || "test";
-  inputFolderName = inputFolderName.replace("/", "");
-  var fileName = params?.fileName || "all";
+  console.log("doGet parameter2");
+  var action = params?.action || "getHtml";
+  var inputFolderName = params?.inputFolderName || "hfla/hfla-test";
+  console.log(inputFolderName);
+  // inputFolderName = inputFolderName.replace("/", "");
+  var fileName = params?.fileName || "reminder";
+  console.log(fileName);
   const m = mainProcess({ action, inputFolderName, fileName });
   return m;
 }
@@ -20,7 +22,7 @@ function mainProcess(options) {
     return getFiles(options);
   } else {
     var html = getHtml(options.inputFolderName, options.fileName);
-    console.log("html", html);
+    console.log("html 1", html);
     return html;
   }
 }

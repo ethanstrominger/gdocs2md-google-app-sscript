@@ -6,12 +6,15 @@ namespace convert {
     var output: string[] = [];
     var images = [];
     var listCounters = {};
+    console.log("converting doc to html", numChildren);
 
     // Walk through all the child elements of the body.
     for (var i = 0; i < numChildren; i++) {
       var child = body.getChild(i);
+      console.log("child: ", i, numChildren);
       output.push(processItem(child, listCounters, images));
       depth = depth - 1;
+      console.log("processed item", i, depth);
     }
 
     var html = output.join("\n");
@@ -30,6 +33,8 @@ function processItem(
   var prefix = "",
     suffix = "";
 
+  const string = item?.toString();
+
   if (item.getType() == DocumentApp.ElementType.TABLE_CELL) {
     prefix = "<td>";
     suffix = "</td>";
@@ -42,22 +47,21 @@ function processItem(
       skipParagraphTag
     ));
   } else if (item.getType() == DocumentApp.ElementType.INLINE_IMAGE) {
-    processItem(item, images, output);
+    console.log("image call process item 2");
+    processImage(item, images, output);
     depth = depth - 1;
+    console.log("depth: ", depth);
   } else if (item.getType() === DocumentApp.ElementType.LIST_ITEM) {
     ({ prefix, suffix } = processList(item, listCounters, prefix, suffix));
+  } else if (item.getType() === DocumentApp.ElementType.TABLE) {
+    processTable(item, output);
+  } else if (item.getText) {
+    processText(item, output);
   }
-
   output.push(prefix);
 
-  if (item.getType() == DocumentApp.ElementType.TABLE) {
-    processTable(item, output);
-  } else {
-    if (item.getNumChildren) {
-      processChildren(item, output, listCounters, images, skipParagraphTag);
-    } else {
-      processText(item, output);
-    }
+  if (item.getNumChildren) {
+    processChildren(item, output, listCounters, images, skipParagraphTag);
   }
 
   output.push(suffix);
@@ -70,6 +74,7 @@ function processList(
   prefix: string,
   suffix: string
 ) {
+  console.log("processing list item");
   var listItem = item;
   var gt = listItem.getGlyphType();
   var key = listItem.getListId() + "." + listItem.getNestingLevel();
@@ -129,6 +134,7 @@ function processChildren(
   for (var i = 0; i < numChildren; i++) {
     const skipParagraphTag = skipParagraphTagFirstChild && i === 0;
     var child = item.getChild(i);
+    console.log("child a1: ", i, numChildren, child?.item);
     output.push(processItem(child, listCounters, images, skipParagraphTag));
     depth = depth - 1;
   }
@@ -175,7 +181,7 @@ function processText(item, output) {
   if (indices.length <= 1) {
     // Assuming that a whole para fully italic is a quote
     if (item.isBold()) {
-      output.push("<b>" + text + "</b>");
+      output.push("**" + text + "**");
     } else if (item.isItalic()) {
       output.push("<blockquote>" + text + "</blockquote>");
     } else if (text.trim().indexOf("http://") == 0) {
@@ -193,10 +199,10 @@ function processText(item, output) {
       Logger.log(partText);
 
       if (partAtts.ITALIC) {
-        output.push("<i>");
+        output.push("*");
       }
       if (partAtts.BOLD) {
-        output.push("<b>");
+        output.push("**");
       }
       if (partAtts.UNDERLINE) {
         output.push("<u>");
@@ -216,10 +222,10 @@ function processText(item, output) {
       }
 
       if (partAtts.ITALIC) {
-        output.push("</i>");
+        output.push("*");
       }
       if (partAtts.BOLD) {
-        output.push("</b>");
+        output.push("**");
       }
       if (partAtts.UNDERLINE) {
         output.push("</u>");
@@ -229,6 +235,7 @@ function processText(item, output) {
 }
 
 function processImage(item, images, output) {
+  console.log("processing images");
   images = images || [];
   var blob = item.getBlob();
   var contentType = blob.getContentType();
@@ -272,5 +279,6 @@ function processRow(row: GoogleAppsScript.Document.TableRow, output) {
   output.push("</tr>");
 }
 function processCell(cell: GoogleAppsScript.Document.TableCell, output) {
+  console.log("child a2: ", cell, cell?.item);
   output.push(processItem(cell, output, null, true));
 }

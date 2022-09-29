@@ -91,7 +91,7 @@ async function convertAllHtml(
       fileName: file.fileName,
     });
     fs.mkdirSync(outputFolderName, { recursive: true });
-    const outputFileName = outputFolderName + file.fileName + ".html";
+    const outputFileName = outputFolderName + file.fileName + ".md";
     fs.writeFileSync(outputFileName, html);
   });
 }
